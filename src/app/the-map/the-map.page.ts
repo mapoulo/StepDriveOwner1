@@ -3,6 +3,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
 import {ViewChild ,ElementRef } from '@angular/core';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import * as firebase from 'firebase';
+
  
 
 
@@ -19,11 +21,30 @@ export class TheMapPage implements OnInit {
   options : GeolocationOptions;
   currentPos : Geoposition;
   @ViewChild('map', {static: false}) mapElement: ElementRef;
+  db = firebase.firestore();
+  users = [];
    map: any;
    latitude : number;
   longitude : number;
 
-  constructor( private geolocation : Geolocation,  private nativeGeocoder: NativeGeocoder) { }
+  constructor( private geolocation : Geolocation,  private nativeGeocoder: NativeGeocoder) { 
+   
+      this.db.collection('users').onSnapshot(snapshot => {
+        snapshot.forEach(doc => {
+          // this.users = doc.data();
+          // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
+          this.users.push(doc.data());
+          console.log('Driving school owner:',this.users); 
+          
+          this.users.forEach(Customers => {
+            this.addMarkersOnTheCustomersCurrentLocation(Customers.coords.lat, Customers.coords.lng);
+          }) 
+        })
+      });
+
+      console.log('Driving school owner:',this.users,length);
+  
+  }
 
   ngOnInit() {
   }
@@ -103,7 +124,7 @@ loadMap() {
 
   //==============================
 //addMarkers method adds the customer's location 
-addMarkersOnTheCustomersCurrentLocation(){
+addMarkersOnTheCustomersCurrentLocation(lat, lng){
   
   // let marker = new google.maps.Marker({
   //   map: this.map,
@@ -112,13 +133,14 @@ addMarkersOnTheCustomersCurrentLocation(){
    
   // });
 
+  // -26.260901, 27.949600699999998
+
   let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
-      position: new google.maps.LatLng(-26.2601316, 27.9495796),
- 
+      position: new google.maps.LatLng(lat, lng),
   });
-console.log('Marker', marker);
+
 
   let content = "<p>Customer's Location!</p>";          
 
@@ -178,6 +200,17 @@ addMarker(){
 
   google.maps.event.addListener(marker, 'click', () => {
   infoWindow.open(this.map, marker);
+  });
+
+  new google.maps.Circle({
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35,
+    map: this.map,
+    center: new google.maps.LatLng(-26.2601316, 27.9495796),
+    radius: 550
   });
 }
 

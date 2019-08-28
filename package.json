@@ -37,7 +37,7 @@
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-nativegeocoder": "3.2.2",
     "core-js": "^2.5.4",
-    "firebase": "^6.4.0",
+    "firebase": "^6.4.2",
     "ionic-swipe-all": "^2.0.0",
     "rxjs": "~6.5.1",
     "rxjs-compat": "^6.5.2",
