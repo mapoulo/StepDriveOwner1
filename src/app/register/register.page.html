@@ -1,9 +1,36 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<ion-content class="no-scroll">
+    <div ion-fixed class="container">
+      <div class="logo">
+        <img src="../../assets/blacklogo.svg" alt="">
+      </div>
+      <div class="form">
+        <h1>Signup</h1>
+        <div>
+  
+          <div class="input">
+            <p>Email</p>
+            <input type="email">
+          </div>
+  
+          <div class="input">
+            <p>Password</p>
+            <input type="email" type="password">
+          </div>
+  
+          <div class="forgot">
+            <button (click)="goToLogin()">Already have an account?</button>
+          </div>
+  
+          <div (click)="goToMain()" class="button">
+            <button >Register</button>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div position="bottom" class="footer-background">
+  
+      </div>
+  
+    </div>
+  </ion-content>
