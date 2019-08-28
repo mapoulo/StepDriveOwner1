@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'graphs', loadChildren: './graphs/graphs.module#GraphsPageModule' },
   { path: 'past-b', loadChildren: './past-b/past-b.module#PastBPageModule' },
   { path: 'the-map', loadChildren: './the-map/the-map.module#TheMapPageModule' },
-  { path: 'onboarding', loadChildren: './onboarding/onboarding.module#OnboardingPageModule' },
+  { path: 'onboarding', loadChildren: './onboarding/onboarding.module#OnboardingPageModule' },  { path: 'reset-password', loadChildren: './reset-password/reset-password.module#ResetPasswordPageModule' },
+
 
 ];
 
