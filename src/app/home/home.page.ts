@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonSlides, IonMenu } from "@ionic/angular";
 import {Swiper} from 'swiper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -96,6 +97,10 @@ export class HomePage {
       }
     }
   };
-  constructor() {}
+  constructor(public router:Router) {}
+
+  main(){
+    this.router.navigateByUrl('/main')
+  }
   
 }

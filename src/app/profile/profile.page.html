@@ -7,34 +7,32 @@
                   <form [formGroup]="profileForm">
                         <ion-item>
                         <ion-label position="floating">Driving School Name</ion-label>
-                        <ion-input formControlName="schoolname" type="text" required></ion-input>
+                        <ion-input formControlName="schoolname"   type="text" required></ion-input>
                   </ion-item>
                   <ion-item>
                         <ion-label position="floating">Registration Number</ion-label>
-                        <ion-input type="tel" formControlName="registration" required="true"></ion-input>
+                        <ion-input type="tel" formControlName="registration"   required="true"></ion-input>
                   </ion-item>
                   <ion-item>
                         <ion-label position="floating">Select Image</ion-label>
-                        <ion-input type="text" formControlName="image" required></ion-input>
+                        <ion-input type="text" formControlName="image"   required></ion-input>
                   </ion-item>
                   <ion-item>
                         <ion-label position="floating">Email Address</ion-label>
-                        <ion-input type="email" formControlName="email" required></ion-input>
+                        <ion-input type="email" formControlName="email"   required></ion-input>
                   </ion-item>
                   <ion-item>
                         <ion-label position="floating">Phone Number</ion-label>
-                        <ion-input type="tel" formControlName="cellnumber" required></ion-input>
+                        <ion-input type="tel" formControlName="cellnumber"   required></ion-input>
                   </ion-item>
                   <ion-item>
                         <ion-label position="floating">Cost per Person</ion-label>
-                        <ion-input type="tel" formControlName="cost"></ion-input>
-                  </ion-item>
-                  <ion-item>
+                        <ion-input type="tel" formControlName="cost"  ></ion-input>
                         <ion-label position="floating">Address</ion-label>
-                        <ion-input type="text" formControlName="address" required></ion-input>
+                        <ion-input type="text" formControlName="address"   required></ion-input>
                   </ion-item>
                   <ion-item>
-                        <ion-checkbox formControlName="allday" checked="true"></ion-checkbox> Open 24/7
+                        <ion-checkbox formControlName="allday" checked="true"  ></ion-checkbox> Open 24/7
                   </ion-item>
                   <ion-item *ngIf="!profileForm.value.allday">
                               <ion-label position="floating">Open Time</ion-label>
@@ -42,7 +40,7 @@
                   </ion-item>
                   <ion-item *ngIf="!profileForm.value.allday">
                               <ion-label position="floating">Closing Time</ion-label>
-                              <ion-datetime displayFormat="HH:mm" formControlName="closed"></ion-datetime>
+                              <ion-datetime displayFormat="HH:mm" formControlName="closed"   ></ion-datetime>
                   </ion-item>
 
 

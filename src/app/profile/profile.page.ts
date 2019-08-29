@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
+
+
 export class ProfilePage implements OnInit {
+
+
   // reference to firebase firestore
   db = firebase.firestore();
   // reference to firebase storage for image uploads
@@ -23,10 +29,26 @@ export class ProfilePage implements OnInit {
     address: '',
     open: null,
     closed: null,
-    allday: true
+    allday: true,
+    uid: ''
   }
+
+
   profileForm: FormGroup
-  constructor(public formBuilder: FormBuilder) { 
+
+  DrivingSchoolOwnersId : any;
+
+  constructor(public formBuilder: FormBuilder) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        this.businessdata.uid = user.uid;
+        console.log('Current user in the profile is :',this.DrivingSchoolOwnersId);
+      } else {
+        // No user is signed in.
+      }
+    }); 
+
     this.profileForm = this.formBuilder.group({
       schoolname: new FormControl ('', Validators.compose([
         Validators.required,
@@ -69,12 +91,27 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
   }
+
+
   addBusinessData() {
+
+  
     console.log(this.profileForm.value);
     this.db.collection('businesses').doc(this.profileForm.value.schoolname).set(this.profileForm.value).then(res => {
+    
+     
       console.log('Success');
     }).catch(err => {
       console.log('Failed');
-    })
+    });
+ 
+
+    // var cityRef = this.db.collection('businesses').doc(this.profileForm.value.schoolname);
+    // cityRef.set({
+    // capital: true,
+    // uid : this.DrivingSchoolOwnersId
+    // }, { merge: true });
+
+console.log('data added in the profile');
   }
 }

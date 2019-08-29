@@ -21,6 +21,8 @@ export class AuthService {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((newUserCredential: firebase.auth.UserCredential) => {
+        console.log('The User UID is',newUserCredential.user.uid);
+        // 2dM0Ry44eGOq0oqvP2wSl4LHCjT2
         firebase
           .firestore()
           .doc(`/userProfile/${newUserCredential.user.uid}`)

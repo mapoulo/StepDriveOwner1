@@ -4,6 +4,9 @@ import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/ge
 import {ViewChild ,ElementRef } from '@angular/core';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import * as firebase from 'firebase';
+import { AuthService } from '../../app/user/auth.service';
+import { LoginPage } from '../login/login.page';
+import { Router } from '@angular/router';
 
  
 
@@ -27,7 +30,7 @@ export class TheMapPage implements OnInit {
    latitude : number;
   longitude : number;
 
-  constructor( private geolocation : Geolocation,  private nativeGeocoder: NativeGeocoder) { 
+  constructor( private geolocation : Geolocation, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
    
       this.db.collection('users').onSnapshot(snapshot => {
         snapshot.forEach(doc => {
@@ -38,6 +41,8 @@ export class TheMapPage implements OnInit {
           
           this.users.forEach(Customers => {
             this.addMarkersOnTheCustomersCurrentLocation(Customers.coords.lat, Customers.coords.lng);
+           
+            
           }) 
         })
       });
@@ -49,10 +54,63 @@ export class TheMapPage implements OnInit {
   ngOnInit() {
   }
 
+  Logout(){
+    this.AuthService.logoutUser();
+    this.router.navigateByUrl('/login')
+    }
+
+add(){
+     this.AuthService.logoutUser();
+
+//     var cityRef = this.db.collection('users').doc('IUYyW8lMR71e7yCo3kcg');
+//      cityRef.set({
+//     capital: true,
+//     uid : 'ssssssss'
+//     }, { merge: true });
+// console.log('data added');
+
+  // var cityRef = this.db.collection('businesses').doc(this.profileForm.value.schoolname);
+    // cityRef.set({
+    // capital: true,
+    // uid : this.DrivingSchoolOwnersId
+    // }, { merge: true });
+   
+    // this.db.collection("users").where("name", "==", "Keke")
+    // .get()
+    // .then(function(querySnapshot) {
+    //     querySnapshot.forEach(function(doc) {
+    //         // doc.data() is never undefined for query doc snapshots
+    //         console.log(doc.id, " => ", doc.data());
+    //     });
+    // })
+    // .catch(function(error) {
+    //     console.log("Error getting documents: ", error);
+    // });
+  }
+
+
+
   ionViewDidEnter(){
     this.getUserPosition();
     // this.loadMap() ;
 } 
+
+takeData(){
+   this.db.collection("users").where("name", "==", 'Nkwe')
+  .get()
+  .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log('The data',doc.id, " => ", doc.data());
+      });
+  })
+  .catch(function(error) {
+      console.log("Error getting documents: ", error);
+  });
+}
+
+
+
 
   getUserPosition(){
     this.options = {
@@ -125,7 +183,7 @@ loadMap() {
   //==============================
 //addMarkers method adds the customer's location 
 addMarkersOnTheCustomersCurrentLocation(lat, lng){
-  
+  console.log(lat);
   // let marker = new google.maps.Marker({
   //   map: this.map,
   //   animation: google.maps.Animation.DROP,
