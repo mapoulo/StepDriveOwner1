@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AwaitingPage implements OnInit {
 
+  
   constructor() { }
 
   ngOnInit() {
