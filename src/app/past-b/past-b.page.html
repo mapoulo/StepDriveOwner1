@@ -1,4 +1,4 @@
-<ion-content class="no-scroll">
+<ion-content class="no-scroll" >
     <div class="container">
       <div class="dSchool">
         <div class="thumb">
@@ -12,9 +12,9 @@
               L-Mani Driving School
             </p>
           </div>
-          <div class="todo">
+          <!-- <div class="todo">
             <p text-end><a>Todo: 3 | Done: 57 | Declined: 34</a></p>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="rev">
@@ -25,20 +25,20 @@
         Reviews
       </h2>
     </div>
-    <div padding class="cards">
+    <div padding class="cards" >
     
-      <div class="card">
+      <!-- <div class="card" >
         <div class="ava">
           <ion-avatar slot="start">
             <img src="../../assets/shapes.svg">
           </ion-avatar>
         </div>
       
-        <div class="comments">
+        <div class="comments" >
           <ion-label>
-            <h2>Name Surname</h2>
+            <h2>{{comments.name}}</h2>
       
-            <p>Listen, I've had a pretty messed up day</p>
+            <p>{{comments.comments}}</p>
           </ion-label>
         </div>
       </div>
@@ -105,9 +105,9 @@
                 <p>Listen, I've had a pretty messed up day</p>
               </ion-label>
             </div>
-          </div>
+          </div> -->
         
-          <div class="card">
+          <div class="card"  *ngFor="let comments of reviews">
             <div class="ava">
               <ion-avatar slot="start">
                 <img src="../../assets/shapes.svg">
@@ -116,9 +116,9 @@
           
             <div class="comments">
               <ion-label>
-                <h2>Name Surname</h2>
-          
-                <p>Listen, I've had a pretty messed up day</p>
+                <h2>{{comments.name}}</h2>
+      
+                <p>{{comments.comments}}</p>
               </ion-label>
             </div>
           </div>

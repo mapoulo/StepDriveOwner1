@@ -40,6 +40,7 @@ export class ProfilePage implements OnInit {
     open: '',
     closed: '',
     allday: 'true',
+    
 
 
   }
@@ -48,9 +49,9 @@ export class ProfilePage implements OnInit {
 
   validation_messages = {
     'schoolname': [
-      {type: 'required', message: 'email is required.'},
-      {type: 'minlength', message: 'email is valid.'},
-      {type: 'maxlength', message: 'email must be less than 10 char or less'},
+      {type: 'required', message: 'schoolname is required.'},
+      {type: 'minlength', message: 'schoolname is valid.'},
+      {type: 'maxlength', message: 'schoolname must be less than 10 char or less'},
     ],
     'registration': [
      {type: 'required', message: 'registration is required.'},
@@ -78,14 +79,14 @@ export class ProfilePage implements OnInit {
     {type: 'maxlength', message: 'address is required.'},
   ],
   'open': [
-    {type: 'required', message: 'Password is required.'},
-    {type: 'minlength', message: 'password must be atleast 6 char or more.'},
-    {type: 'maxlength', message: 'Password must be less than 8 char or less'},
+    {type: 'required', message: 'open is required.'},
+    {type: 'minlength', message: 'open must be atleast 6 char or more.'},
+    {type: 'maxlength', message: 'open must be less than 8 char or less'},
   ],
   'closed': [
-    {type: 'required', message: 'Password is required.'},
-    {type: 'minlength', message: 'password must be atleast 6 char or more.'},
-    {type: 'maxlength', message: 'Password must be less than 8 char or less'},
+    {type: 'required', message: 'closed is required.'},
+    {type: 'minlength', message: 'closed must be atleast 6 char or more.'},
+    {type: 'maxlength', message: 'closed must be less than 8 char or less'},
   ],
   'allday': [
     {type: 'required', message: 'Password is required.'},
@@ -104,16 +105,18 @@ export class ProfilePage implements OnInit {
   constructor(public formBuilder: FormBuilder ,public forms: FormBuilder,public router:Router,public camera: Camera,) {
     
     this.loginForm = this.forms.group({
-      schoolname: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      registration: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])),
-      email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      cellnumber: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
-      cost: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      desc: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      address: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      open: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      closed: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      allday: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      image: new FormControl(this.businessdata.image, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      schoolname: new FormControl(this.businessdata.schoolname, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      registration: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
+      email: new FormControl(this.businessdata.registration, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      cellnumber: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
+      cost: new FormControl(this.businessdata.cost, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      desc: new FormControl(this.businessdata.desc, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      address: new FormControl(this.businessdata.address, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      open: new FormControl(this.businessdata.open, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      closed: new FormControl(this.businessdata.closed, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      allday: new FormControl(this.businessdata.allday, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      
     })
 
    
@@ -121,6 +124,7 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
+    this.getProfile();
   }
 
 
@@ -175,10 +179,36 @@ export class ProfilePage implements OnInit {
         
         this.db.collection('businesses').doc(this.businessdata.schoolname).set(this.businessdata).then(res => {
           console.log('Profile created');
+          this.getProfile()
           this.router.navigateByUrl('/awaiting')
         }).catch(error => {
           console.log('Error');
         });
       }
+      getProfile() {
+        let schollname = 'keketso';
+        this.db.collection('businesses').where('schoolname', '==', schollname).get().then(res => {
+          res.forEach(doc => {
+            console.log(doc.data());
+            this.businessdata.image = doc.data().image
+            this.businessdata.schoolname = doc.data().schoolname
+            this.businessdata.registration = doc.data().registration
+            this.businessdata.email = doc.data().email
+            this.businessdata.cellnumber = doc.data().cellnumber
+            this.businessdata.cost = doc.data().cost
+            this.businessdata.desc = doc.data().desc
+            this.businessdata.open = doc.data().open
+            this.businessdata.address = doc.data().address
+            this.businessdata.closed = doc.data().closed
+            
+            
+          })
+         
+        }).catch(err => {
+          console.log(err);
+          
+        })
+      }
     }
 
+    

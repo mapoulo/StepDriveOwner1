@@ -8,8 +8,20 @@ import * as firebase from 'firebase';
 export class PastbookingsPage implements OnInit {
   db = firebase.firestore();
   storage = firebase.storage().ref();
-  
-  constructor() { }
+  requests=[];
+  constructor() { 
+    this.db.collection('request').onSnapshot(snapshot => {
+      snapshot.forEach(doc => {
+        // this.users = doc.data();
+        this.requests.push(doc.data());
+        console.log('The requests:',this.requests);
+        
+        
+      })
+    });
+
+
+  }
 
   ngOnInit() {
   }

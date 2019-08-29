@@ -50,7 +50,7 @@
                   
                       <ion-item>
                         <ion-label position="floating">cellnumber</ion-label>
-                        <ion-input type="cellnumber"  formControlName="cellnumber"  [(ngModel)]="businessdata.cellnumber"></ion-input>
+                        <ion-input type="tel"  formControlName="cellnumber"  [(ngModel)]="businessdata.cellnumber"></ion-input>
                       </ion-item>
                       <div class="error" *ngFor="let validate of validation_messages.cellnumber">
                               <div class="messages" *ngIf="loginForm.get('cellnumber').hasError(validate.type) && (loginForm.get('cellnumber').dirty || loginForm.get('cellnumber').touched)">
@@ -59,7 +59,7 @@
                             </div>
                       <ion-item>
                         <ion-label position="floating">cost</ion-label>
-                        <ion-input type="cost"  formControlName="cost"  [(ngModel)]="businessdata.cost"></ion-input>
+                        <ion-input type="tel"  formControlName="cost"  [(ngModel)]="businessdata.cost">R</ion-input>
                       </ion-item>
                       <div class="error" *ngFor="let validate of validation_messages.cost">
                               <div class="messages" *ngIf="loginForm.get('cost').hasError(validate.type) && (loginForm.get('cost').dirty || loginForm.get('cost').touched)">
@@ -87,7 +87,7 @@
                   
                         
                               <ion-label position="floating">Description</ion-label>
-                              <ion-input type="cost"  formControlName="desc" [(ngModel)]="businessdata.desc"></ion-input>
+                              <ion-input type="text"  formControlName="desc" [(ngModel)]="businessdata.desc"></ion-input>
                             </ion-item>
       
                             <div class="error" *ngFor="let validate of validation_messages.schoolname">
@@ -118,10 +118,10 @@
                               </div>
                             </div>
                   
-                            <ion-item>
+                            <!-- <ion-item>
                                 <ion-label position="floating">alldy</ion-label>
                                 <ion-datetime displayFormat="HH:mm"  formControlName="allday" [(ngModel)]="businessdata.allday"></ion-datetime>
-                    </ion-item>
+                    </ion-item> -->
       
                             <div class="error" *ngFor="let validate of validation_messages.allday">
                                     <div class="messages" *ngIf="loginForm.get('allday').hasError(validate.type) && (loginForm.get('allday').dirty || loginForm.get('allday').touched)">
@@ -143,7 +143,7 @@
       
                   
                     </div>
-                    <div *ngIf="isprofile" class="profileD">
+                    <!-- <div *ngIf="isprofile" class="profileD">
                       <div class="image">
                         <img src="{{businessdata.image}}" alt="">
                       </div>
@@ -160,7 +160,7 @@
                       <ion-button expand="full" (click)="edit()">
                           Edit
                         </ion-button>
-                    </div>
+                    </div> -->
                               <!-- <div class="form">
                                     <form [formGroup]="profileForm">
                                           <ion-item>

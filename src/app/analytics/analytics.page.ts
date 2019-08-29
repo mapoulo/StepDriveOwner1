@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
 export class AnalyticsPage implements OnInit {
   db = firebase.firestore();
   users = [];
-  todo =[];
+
 
   constructor(private router:Router) {
     this.db.collection('businesses').onSnapshot(snapshot => {
@@ -22,7 +22,7 @@ export class AnalyticsPage implements OnInit {
       })
     });
 
-
+ 
    }
 
   ngOnInit() {
@@ -30,4 +30,5 @@ export class AnalyticsPage implements OnInit {
   goToPastB() {
     this.router.navigate(['past-b']);
   }
+  
 }
