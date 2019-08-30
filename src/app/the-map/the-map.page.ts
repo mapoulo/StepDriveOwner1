@@ -135,6 +135,7 @@ addMap(lat,long){
   let mapOptions = {
   center: latLng,
   zoom: 15,
+  disableDefaultUI: true,
   mapTypeId: google.maps.MapTypeId.ROADMAP
   }
   this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
