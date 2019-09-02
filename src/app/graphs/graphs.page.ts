@@ -12,20 +12,12 @@ export class GraphsPage implements OnInit {
 //database 
 db = firebase.firestore();
 //array from database
-data =[];
+charts =[];
 
   bars: any;
   colorArray: any;
   constructor() {
-    this.db.collection('businesses').onSnapshot(snapshot => {
-      snapshot.forEach(doc => {
-        // this.users = doc.data();
-        this.data.push(doc.data());
-        console.log('The number of bookings is:',this.data.length);
-        
-        
-      })
-    });
+
     
    }
 
