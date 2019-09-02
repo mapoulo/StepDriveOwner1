@@ -123,14 +123,15 @@
                                 <ion-datetime displayFormat="HH:mm"  formControlName="allday" [(ngModel)]="businessdata.allday"></ion-datetime>
                     </ion-item> -->
       
-                            <div class="error" *ngFor="let validate of validation_messages.allday">
-                                    <div class="messages" *ngIf="loginForm.get('allday').hasError(validate.type) && (loginForm.get('allday').dirty || loginForm.get('allday').touched)">
-                                      {{validate.message}}
-                                    </div>
-                                  </div>
+                <div class="error" *ngFor="let validate of validation_messages.allday">
+                <div class="messages" *ngIf="loginForm.get('allday').hasError(validate.type) && (loginForm.get('allday').dirty || loginForm.get('allday').touched)">
+                       {{validate.message}}
+                    </div>
+                   </div>
                   <ion-button expand="full" (click)="createAccount()">
                     Done
                   </ion-button>
+                  <button (click)="showData()">Show Profile</button>
                   
                   
                   

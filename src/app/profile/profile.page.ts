@@ -42,11 +42,13 @@ export class ProfilePage implements OnInit {
     open: '',
     closed: '',
     allday: 'true',
-    
-
-
+    uid: ''
   }
 
+  showData(){
+    console.log(this.businessdata);
+    
+  }
 
 
   validation_messages = {
@@ -181,14 +183,30 @@ export class ProfilePage implements OnInit {
   // }
   createAccount(){
         
-        this.db.collection('businesses').doc(this.businessdata.schoolname).set(this.businessdata).then(res => {
+        this.db.collection('businesses').doc(this.businessdata.schoolname).set({
+          address : this.businessdata.address,
+          allday : this.businessdata.allday,
+          cellnumber : this.businessdata.cellnumber,
+          closed : this.businessdata.closed,
+          cost : this.businessdata.cost,
+          desc : this.businessdata.desc,
+          email : this.businessdata.email,
+          image : this.businessdata.image,
+          open : this.businessdata.open,
+          registration : this.businessdata.registration,
+          schollname : this.businessdata.schoolname,
+          uid : firebase.auth().currentUser.uid
+        }).then(res => {
           console.log('Profile created');
           this.getProfile()
           this.router.navigateByUrl('/awaiting')
         }).catch(error => {
           console.log('Error');
         });
+
       }
+
+
       getProfile() {
         let schollname = 'keketso';
         this.db.collection('businesses').where('schoolname', '==', schollname).get().then(res => {

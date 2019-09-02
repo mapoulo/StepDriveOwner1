@@ -40,10 +40,9 @@ export class TheMapPage implements OnInit {
           console.log('Driving school owner:',this.users); 
           
           this.users.forEach(Customers => {
-            this.addMarkersOnTheCustomersCurrentLocation(Customers.coords.lat, Customers.coords.lng);
-           
-            
+            this.addMarkersOnTheCustomersCurrentLocation(Customers.location.coords.lat, Customers.location.coords.lng);
           }) 
+
         })
       });
 
@@ -122,6 +121,14 @@ takeData(){
         this.currentPos = pos;      
         console.log(pos);
         this.addMap(pos.coords.latitude, pos.coords.longitude);
+        // let latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        // let mapOptions = {
+        // center: latLng,
+        // zoom: 15,
+        // disableDefaultUI: true,
+        // mapTypeId: google.maps.MapTypeId.ROADMAP
+        // }
+        // this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
         this.addMarker();
     },(err : PositionError)=>{
         console.log("error : " + err.message);
@@ -130,7 +137,7 @@ takeData(){
 
 
 
-addMap(lat,long){
+addMap(lat:number,long:number){
   let latLng = new google.maps.LatLng(lat, long);
   let mapOptions = {
   center: latLng,
