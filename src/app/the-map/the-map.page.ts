@@ -29,9 +29,24 @@ export class TheMapPage implements OnInit {
    map: any;
    latitude : number;
   longitude : number;
+  NewUseArray = {};
 
   constructor( private geolocation : Geolocation, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
-   
+    
+    // this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
+      // .get()
+      // .then(function(querySnapshot) {
+      //     querySnapshot.forEach(function(doc) {
+      //         // doc.data() is never undefined for query doc snapshots
+      //         // doc.id, " => ",
+      //         console.log( doc.data());
+      //     });
+      // })
+      // .catch(function(error) {
+      //     console.log("Error getting documents: ", error);
+      // });
+      
+
       this.db.collection('users').onSnapshot(snapshot => {
         snapshot.forEach(doc => {
           // this.users = doc.data();
@@ -45,9 +60,27 @@ export class TheMapPage implements OnInit {
 
         })
       });
-
       console.log('Driving school owner:',this.users,length);
+
+      // this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
+      // .get()
+      // .then(function(querySnapshot) {
+      //     querySnapshot.forEach(function(doc) {
+      //         // doc.data() is never undefined for query doc snapshots
+      //         // doc.id, " => ",
+      //         console.log( doc.data());
+      //     });
+      // })
+      // .catch(function(error) {
+      //     console.log("Error getting documents: ", error);
+      // });
+
   
+  }
+
+  Array(){
+    console.log('Array Data:', this.users);
+    
   }
 
   ngOnInit() {
@@ -58,8 +91,8 @@ export class TheMapPage implements OnInit {
     this.router.navigateByUrl('/login')
     }
 
+   
 add(){
-     this.AuthService.logoutUser();
 
 //     var cityRef = this.db.collection('users').doc('IUYyW8lMR71e7yCo3kcg');
 //      cityRef.set({
@@ -74,17 +107,20 @@ add(){
     // uid : this.DrivingSchoolOwnersId
     // }, { merge: true });
    
-    // this.db.collection("users").where("name", "==", "Keke")
-    // .get()
-    // .then(function(querySnapshot) {
-    //     querySnapshot.forEach(function(doc) {
-    //         // doc.data() is never undefined for query doc snapshots
-    //         console.log(doc.id, " => ", doc.data());
-    //     });
-    // })
-    // .catch(function(error) {
-    //     console.log("Error getting documents: ", error);
-    // });
+    this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            // doc.id, " => ", 
+            console.log( doc.data().location.coords);
+            // this.NewUseArray = doc.data().location
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    console.log('The add method called');
   }
 
 
@@ -141,7 +177,7 @@ addMap(lat:number,long:number){
   let latLng = new google.maps.LatLng(lat, long);
   let mapOptions = {
   center: latLng,
-  zoom: 15,
+  zoom: 10,
   disableDefaultUI: true,
   mapTypeId: google.maps.MapTypeId.ROADMAP
   }
@@ -276,7 +312,7 @@ addMarker(){
     fillOpacity: 0.35,
     map: this.map,
     center: new google.maps.LatLng(-26.2601316, 27.9495796),
-    radius: 550
+    radius: 25000
   });
 }
 
