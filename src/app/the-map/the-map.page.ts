@@ -30,37 +30,30 @@ export class TheMapPage implements OnInit {
    latitude : number;
   longitude : number;
   NewUseArray = {};
+  schools = []
 
   constructor( private geolocation : Geolocation, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
-    
-    // this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
-      // .get()
-      // .then(function(querySnapshot) {
-      //     querySnapshot.forEach(function(doc) {
-      //         // doc.data() is never undefined for query doc snapshots
-      //         // doc.id, " => ",
-      //         console.log( doc.data());
-      //     });
-      // })
-      // .catch(function(error) {
-      //     console.log("Error getting documents: ", error);
-      // });
-      
-
-      this.db.collection('users').onSnapshot(snapshot => {
+      this.db.collection('request').onSnapshot(snapshot => {
         snapshot.forEach(doc => {
           // this.users = doc.data();
           // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
           this.users.push(doc.data());
-          console.log('Driving school owner:',this.users); 
+          console.log('My array is ',this.users);
           
-          this.users.forEach(Customers => {
-            this.addMarkersOnTheCustomersCurrentLocation(Customers.location.coords.lat, Customers.location.coords.lng);
-          }) 
 
+          this.users.forEach(Customers => {
+            console.log('Customers in my array', Customers.schooluid);
+            console.log('Owners UID logged in', firebase.auth().currentUser.uid);
+            if(Customers.schooluid === firebase.auth().currentUser.uid){
+              this.addMarkersOnTheCustomersCurrentLocation(Customers.coords.lat, Customers.coords.lng);
+            }
+          }) 
+  
         })
       });
-      console.log('Driving school owner:',this.users,length);
+     
+
+
 
       // this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
       // .get()
@@ -84,6 +77,7 @@ export class TheMapPage implements OnInit {
   }
 
   ngOnInit() {
+    // this.add()
   }
 
   Logout(){
@@ -91,44 +85,43 @@ export class TheMapPage implements OnInit {
     this.router.navigateByUrl('/login')
     }
 
-   
-add(){
+ 
 
-//     var cityRef = this.db.collection('users').doc('IUYyW8lMR71e7yCo3kcg');
-//      cityRef.set({
-//     capital: true,
-//     uid : 'ssssssss'
-//     }, { merge: true });
-// console.log('data added');
 
-  // var cityRef = this.db.collection('businesses').doc(this.profileForm.value.schoolname);
-    // cityRef.set({
-    // capital: true,
-    // uid : this.DrivingSchoolOwnersId
-    // }, { merge: true });
-   
-    this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
-    .get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            // doc.id, " => ", 
-            console.log( doc.data().location.coords);
-            // this.NewUseArray = doc.data().location
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-    console.log('The add method called');
-  }
 
 
 
   ionViewDidEnter(){
     this.getUserPosition();
+    // this.add();
     // this.loadMap() ;
 } 
+
+add(){
+  
+  let userid = firebase.auth().currentUser.uid;
+  let schools = []
+  this.db.collection("request").where("schooluid", "==", userid)
+     .get()
+     .then(function(querySnapshot) {
+         querySnapshot.forEach(function(doc) {
+             console.log(doc.data());
+             schools.push(doc.data())      
+         });   
+     })
+     .catch(function(error) {
+         console.log("Error getting documents: ", error);
+     });
+     this.schools = schools;
+     console.log('Request', this.schools);
+   console.log('The add method called');
+
+   schools.forEach(Customers => {
+    this.addMarkersOnTheCustomersCurrentLocation(Customers.coords.lat, Customers.coords.lng);
+  })
+
+ }
+
 
 takeData(){
    this.db.collection("users").where("name", "==", 'Nkwe')
