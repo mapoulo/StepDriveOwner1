@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background: url('../../assets/Mask\ Group\ 3.png');
+    // height: 100%;
+    // width: 100%;
+    .create{
+        height: 30%;
+        background: rgba(121, 11, 11, 0.144);
+        text-align: center;
+        img {
+            height: 100%;
+            width: 50%;
+        }
+    }
+    .inputs {
+        // height: 70%;
+    }
+    .btn {
+        // height: 10%;
+    }
+    .item.item-trns {
+        background: rgba(226, 223, 223, 0) !important;
+    }
+    ion-list {
+        background: transparent;
+    }
+}

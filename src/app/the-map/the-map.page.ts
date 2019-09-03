@@ -20,7 +20,11 @@ declare var google;
 
 export class TheMapPage implements OnInit {
 
-
+  // toggles the div, goes up if true, goes down if false
+  display = false;
+  swipeUp() {
+    this.display = !this.display;
+  }
   options : GeolocationOptions;
   currentPos : Geoposition;
   @ViewChild('map', {static: false}) mapElement: ElementRef;
@@ -279,5 +283,7 @@ addMarker(){
     radius: 550
   });
 }
-
+goToProfile(){
+  this.router.navigate(['profile']);
+}
 }
