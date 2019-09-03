@@ -1,45 +1,51 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
-  <form [formGroup] = "loginForm">
-     <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input formControlName="email" type="email" placeholder="Your email address" [class.invalid]="!loginForm.controls['email'].valid &&
-      loginForm.controls['email'].touched">
-      </ion-input>
-    </ion-item>
-    <ion-item class="error-message" *ngIf="!loginForm.controls['email'].valid &&
-       loginForm.controls['email'].touched">
-      <ion-label>Please enter a valid email address.</ion-label>
-    </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input formControlName="password" type="password" placeholder="Your password"
-        [class.invalid]="!loginForm.controls['password'].valid&& loginForm.controls['password'].touched">
-      </ion-input>
-    </ion-item>
-    <ion-item class="error-message" *ngIf="!loginForm.controls['password'].valid
-      && loginForm.controls['password'].touched">
-      <ion-label>Your password needs more than 6 characters.</ion-label>
-    </ion-item> 
-
-    <ion-button (click)="loginUser(loginForm)" 
-    expand="block" 
-    [disabled]="!loginForm.valid">
-      Log In
-    </ion-button>
-  </form>
-
-  <ion-button expand="block" fill="clear" routerLink="/register">
-    Create a new account
-  </ion-button>
-
-  <ion-button expand="block" fill="clear" routerLink="/reset-password">
-    I forgot my password :(
-  </ion-button>
-</ion-content>
+<div class="logo">
+  <img src="../../assets/blacklogo.svg" alt="">
+</div>
+<div class="container">
+  <div class="form">
+    <h1>SIGNIN</h1>
+    <div>
+      <form [formGroup] = "loginForm" class="login">
+        <div class="input">
+          <p>Email</p>
+          <input type="email" formControlName="email" [class.invalid]="!loginForm.controls['email'].valid &&
+          loginForm.controls['email'].touched">
+        </div>
+        <div class="error" *ngIf="!loginForm.controls['email'].valid &&
+        loginForm.controls['email'].touched">
+          <div class="messages">
+            Please enter a valid email address.
+          </div>
+        </div>
+        <div class="input">
+          <p>Password</p>
+          <input type="email" type="password" formControlName="password"
+          [class.invalid]="!loginForm.controls['password'].valid&& loginForm.controls['password'].touched">
+        </div>
+        <div *ngIf="!loginForm.controls['password'].valid
+        && loginForm.controls['password'].touched" class="error">
+          <div class="messages">
+            Your password is incorrect.
+          </div>
+        </div>
+        <div class="forgot">
+          <button routerLink="/reset-password">Forgot Password?</button>
+        </div>
+        <div class="create">
+          <button routerLink="/register">Create Account</button>
+        </div>
+        <br>
+        <div class="button">
+          <button (click)="loginUser(loginForm)" 
+          expand="block" 
+          [disabled]="!loginForm.valid">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <img src="../../assets/MaskFooter.svg" alt="">
+</div>
