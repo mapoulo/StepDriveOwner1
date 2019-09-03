@@ -7,6 +7,17 @@ import * as firebase from 'firebase';
 })
 export class PastbookingsPage implements OnInit {
   db = firebase.firestore();
+user = {
+  uid: ''
+}
+mon = []
+tue = []
+wed = []
+thu = []
+fri = []
+sat = []
+sun = []
+
   storage = firebase.storage().ref();
   requests=[];
   constructor() { 
@@ -25,5 +36,5 @@ export class PastbookingsPage implements OnInit {
 
   ngOnInit() {
   }
-
+  
 }
