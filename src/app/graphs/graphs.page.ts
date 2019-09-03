@@ -14,13 +14,13 @@ db = firebase.firestore();
 user = {
   uid: ''
 }
-mon = [0,2]
-tue = [1]
-wed = [3]
-thu = [6]
-fri = [0]
-sat = [1]
-sun = [0]
+mon = []
+tue = []
+wed = []
+thu = []
+fri = []
+sat = []
+sun = []
 //array from database
 // charts =[];
 

@@ -1,38 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import * as Chart from 'chart.js';
+
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.page.html',
   styleUrls: ['./analytics.page.scss'],
 })
 export class AnalyticsPage implements OnInit {
+  @ViewChild('barChart', {static: false}) barChart;
+//database 
+db = firebase.firestore();
+user = {
+  uid: ''
+}
+mon = []
+tue = []
+wed = []
+thu = []
+fri = []
+sat = []
+sun = []
+//array from database
+// charts =[];
 
-  users = [];
+charts: any;
+  colorArray: any;
+  constructor(private router: Router) {
 
-  db = firebase.firestore();
-  user = {
-    uid: ''
-  }
-  mon = []
-  tue = []
-  wed = []
-  thu = []
-  fri = []
-  sat = []
-  sun = []
-  constructor(private router:Router) {
-    this.db.collection('businesses').onSnapshot(snapshot => {
-      snapshot.forEach(doc => {
-        // this.users = doc.data();
-        this.users.push(doc.data());
-        console.log('The number of users is:',this.users.length);
-        
-        
-      })
-    });
-
- 
+    
    }
 
   ngOnInit() {
@@ -41,11 +39,12 @@ export class AnalyticsPage implements OnInit {
     })
     this.getRequests();
   }
-  goToPastB() {
-    this.router.navigate(['past-b']);
+  ionViewDidEnter() {
+    
+    
+    
   }
   getRequests() {
-    
     this.db.collection('request').where('schooluid', '==',this.user.uid).get().then(res => {
       console.log(res);
       
@@ -74,7 +73,7 @@ export class AnalyticsPage implements OnInit {
           this.tue.push(doc.data())
         }
       })
-      // this.createBarChart();
+      this.createBarChart();
       console.log(this.mon);
       
     }).catch(err => {
@@ -82,4 +81,35 @@ export class AnalyticsPage implements OnInit {
       
     })
   }
+
+  createBarChart() {
+    this.charts = new Chart(this.barChart.nativeElement, {
+      type: 'line',
+      data: {
+        labels: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
+        datasets: [{
+          label: 'Lessons offered per week',
+          data: [this.mon.length, this.tue.length, this.wed.length, this.thu.length, this.fri.length, this.sat.length, this.sun.length],
+          backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
+          borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+}
+
+
+  goToPastB() {
+    this.router.navigate(['past-b']);
+  }
+  
 }

@@ -1,3 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
 <ion-content>
   
 
@@ -6,13 +18,17 @@
                               <div class="header">
                                     <h2>Driving School Detail Setup</h2>
                               </div>
-    
-                              <img  src="{{profileImage}}">
+      
+                  
+                              <div class="create">
+                                  <img src="../../assets/Upload-Folder-icon.png" class="img" alt="" (click)="selectImage() ">
+                                </div>
+                                <img  src="{{profileImage}}">
                     <div *ngIf="!isprofile" class="profile-form">
                       <ion-item>
-                        <ion-button (click)="selectImage() ">
+                        <!-- <ion-button (click)="selectImage() ">
                           Select Image
-                        </ion-button>
+                        </ion-button> -->
                   </ion-item>
                   <p *ngIf="isuploading">Uploading</p>
                   <p *ngIf="isuploaded">Done</p>
@@ -115,17 +131,7 @@
                                 {{validate.message}}
                               </div>
                             </div>
-<!--                   
-                            <ion-item>
-                                <ion-label position="floating">alldy</ion-label>
-                                <ion-datetime displayFormat="HH:mm"  formControlName="allday" [(ngModel)]="businessdata.allday"></ion-datetime>
-                    </ion-item>
-      
-                            <div class="error" *ngFor="let validate of validation_messages.allday">
-                                    <div class="messages" *ngIf="loginForm.get('allday').hasError(validate.type) && (loginForm.get('allday').dirty || loginForm.get('allday').touched)">
-                                      {{validate.message}}
-                                    </div>
-                                  </div> -->
+
                   <ion-button expand="full" (click)="createAccount()">
                     Done
                   </ion-button>
@@ -133,80 +139,7 @@
                   
                   
                     </div>
-                    <!-- <div *ngIf="isprofile" class="profileD">
-                      <div class="image">
-                        <img src="{{businessdata.image}}" alt="">
-                      </div>
-                      <div class="details">
-                        <h1>{{businessdata.name}}</h1>
-                        <p>logged-in as <b>{{businessdata.position}}</b></p>
-                  
-                        <p>{{businessdata.bio}}</p>
-                  
-                        <div class="details">
-                          <p>{{businessdata.email}}</p> <p>{{businessdata.number}}</p>
-                        </div>
-                      </div>
-                      <ion-button expand="full" (click)="edit()">
-                          Edit
-                        </ion-button>
-                    </div> -->
-                              <!-- <div class="form">
-                                    <form [formGroup]="profileForm">
-                                          <ion-item>
-                                          <ion-label position="floating">Driving School Name</ion-label>
-                                          <ion-input formControlName="schoolname" type="text" required></ion-input>
-                                    </ion-item>
-                                    <ion-item>
-                                          <ion-label position="floating">Registration Number</ion-label>
-                                          <ion-input type="tel" formControlName="registration" required="true"></ion-input>
-                                    </ion-item>
-                                    <ion-item>
-                                          <ion-label position="floating">Select Image</ion-label>
-                                          <ion-input type="text" formControlName="image" required></ion-input>
-                                    </ion-item>
-                                    <ion-item>
-                                          <ion-label position="floating">Email Address</ion-label>
-                                          <ion-input type="email" formControlName="email" required></ion-input>
-                                    </ion-item>
-                                    <ion-item>
-                                          <ion-label position="floating">Phone Number</ion-label>
-                                          <ion-input type="tel" formControlName="cellnumber" required></ion-input>
-                                    </ion-item>
-                                    <ion-item>
-                                          <ion-label position="floating">Cost per Person</ion-label>
-                                          <ion-input type="tel" formControlName="cost"></ion-input>
-                                    </ion-item>
-                                    <ion-item>
-                                          <ion-label position="floating">Address</ion-label>
-                                          <ion-input type="text" formControlName="address" required></ion-input>
-                                    </ion-item>
-                                    <ion-item>
-                                          <ion-checkbox formControlName="allday" checked="true"></ion-checkbox> Open 24/7
-                                    </ion-item>
-                                    <ion-item *ngIf="!profileForm.value.allday">
-                                                <ion-label position="floating">Open Time</ion-label>
-                                                <ion-datetime displayFormat="HH:mm" formControlName="open"></ion-datetime>
-                                    </ion-item>
-                                    <ion-item *ngIf="!profileForm.value.allday">
-                                                <ion-label position="floating">Closing Time</ion-label>
-                                                <ion-datetime displayFormat="HH:mm" formControlName="closed"></ion-datetime>
-                                    </ion-item>
-                  
-                  
-                                    <ion-item>
-                                          <ion-label position="floating">Description</ion-label>
-                                          <ion-textarea type="text" formControlName="desc" required rows="10" cols="20"></ion-textarea>
-                                    </ion-item>
-                              <div class="button">
-                                    <ion-button [disabled]="!profileForm.valid" (click)="addBusinessData()">
-                                          Click me
-                                    </ion-button>
-                              </div>
-                              </form>
-                                    
-                              </div>
-                               -->
+                   
                         </div>
       
       
