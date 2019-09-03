@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-
-
 export class ProfilePage implements OnInit {
   loginForm: FormGroup;
   
@@ -24,7 +22,7 @@ export class ProfilePage implements OnInit {
     open: '',
     closed: '',
     allday: '',
-   
+    content :''
   }
 
 
@@ -38,17 +36,14 @@ export class ProfilePage implements OnInit {
     cellnumber: '',
     cost: '',
     desc: '',
-    address: '',
+    content: '',
     open: '',
     closed: '',
     allday: 'true',
     uid: ''
+
   }
 
-  showData(){
-    console.log(this.businessdata);
-    
-  }
 
 
   validation_messages = {
@@ -77,7 +72,7 @@ export class ProfilePage implements OnInit {
     {type: 'minlength', message: 'cost is required.'},
     {type: 'maxlength', message: 'cost is required.'},
   ],
-  'address': [
+  'content': [
     {type: 'required', message: 'address is required.'},
     {type: 'minlength', message: 'address is required.'},
     {type: 'maxlength', message: 'address is required.'},
@@ -98,8 +93,6 @@ export class ProfilePage implements OnInit {
     {type: 'maxlength', message: 'Password must be less than 8 char or less'},
   ]
   }
-
-
   profileForm: FormGroup
   profileImage: string;
   userProv: any;
@@ -108,17 +101,17 @@ export class ProfilePage implements OnInit {
   userProfile: any;
   isuploaded: boolean;
   imageSelected: boolean;
-  constructor(public formBuilder: FormBuilder ,public forms: FormBuilder,public router:Router,public camera: Camera,) {
+  constructor(public formBuilder: FormBuilder ,public forms: FormBuilder,public router:Router,public camera: Camera) {
     
     this.loginForm = this.forms.group({
       image: new FormControl(this.businessdata.image, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       schoolname: new FormControl(this.businessdata.schoolname, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      registration: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
-      email: new FormControl(this.businessdata.registration, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      registration: new FormControl(this.businessdata.registration, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(8)])),
+      email: new FormControl(this.businessdata.email, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       cellnumber: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
       cost: new FormControl(this.businessdata.cost, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       desc: new FormControl(this.businessdata.desc, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      address: new FormControl(this.businessdata.address, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      content: new FormControl(this.businessdata.content, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       open: new FormControl(this.businessdata.open, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       closed: new FormControl(this.businessdata.closed, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       allday: new FormControl(this.businessdata.allday, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -183,33 +176,17 @@ export class ProfilePage implements OnInit {
   // }
   createAccount(){
         
-        this.db.collection('businesses').doc(this.businessdata.schoolname).set({
-          address : this.businessdata.address,
-          allday : this.businessdata.allday,
-          cellnumber : this.businessdata.cellnumber,
-          closed : this.businessdata.closed,
-          cost : this.businessdata.cost,
-          desc : this.businessdata.desc,
-          email : this.businessdata.email,
-          image : this.businessdata.image,
-          open : this.businessdata.open,
-          registration : this.businessdata.registration,
-          schoolname : this.businessdata.schoolname,
-          uid : firebase.auth().currentUser.uid
-        }).then(res => {
+        this.db.collection('businesses').doc(this.businessdata.schoolname).set(this.businessdata).then(res => {
           console.log('Profile created');
           this.getProfile()
           this.router.navigateByUrl('/awaiting')
         }).catch(error => {
           console.log('Error');
         });
-
       }
-
-
       getProfile() {
-        
-        this.db.collection('businesses').where('uid', '==', firebase.auth().currentUser.uid).get().then(res => {
+        let schollname = 'Linco Skills Driving School';
+        this.db.collection('businesses').where('schoolname', '==', schollname).get().then(res => {
           res.forEach(doc => {
             console.log(doc.data());
             this.businessdata.image = doc.data().image
@@ -220,8 +197,10 @@ export class ProfilePage implements OnInit {
             this.businessdata.cost = doc.data().cost
             this.businessdata.desc = doc.data().desc
             this.businessdata.open = doc.data().open
-            this.businessdata.address = doc.data().address
+            this.businessdata.content = doc.data().content
             this.businessdata.closed = doc.data().closed
+            
+            
           })
          
         }).catch(err => {
