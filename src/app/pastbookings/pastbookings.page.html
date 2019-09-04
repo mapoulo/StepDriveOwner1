@@ -1,4 +1,4 @@
-<ion-content *ngFor="let r of requests">
+<ion-content *ngFor="let data of NewRequeste">
 
 <div class="container">
   <div class="title">
@@ -17,11 +17,13 @@
                 Take me here
               </button>
             </div>
-        <h4>Name {{r.name}}</h4>
-        <p id="address"><b>{{r.Address}}</b></p>
-        <p>Package: {{r.package}}</p>
-        <p>Date In:  {{r.datein}}</p>
-        <p>Date Out: {{r.dateout}}</p>
+        <h4>Address: {{data.content}}</h4>
+        <p id="address"><b>{{data.datecreated}}</b></p>
+        <!-- <p>DataIn: {{data.}}</p>
+        <p>DateOut:  {{data.datein}}</p>
+        <p>Lessons: {{data.dateout}}</p>
+        <p>Book Ordered: {{data.book}}</p>
+        <p>Confirm: {{data.confirmed}}</p> -->
       </div>
     </div>
   </div>

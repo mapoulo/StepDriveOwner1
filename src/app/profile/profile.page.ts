@@ -3,6 +3,8 @@ import * as firebase from 'firebase';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera,CameraOptions } from '@ionic-native/Camera/ngx';
 import { Router } from '@angular/router';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +35,8 @@ export class ProfilePage implements OnInit {
    
   }
 
-
+  options : GeolocationOptions;
+  currentPos : Geoposition;
   db = firebase.firestore();
   storage = firebase.storage().ref();
   businessdata = {
@@ -114,7 +117,7 @@ export class ProfilePage implements OnInit {
   userProfile: any;
   isuploaded: boolean;
   imageSelected: boolean;
-  constructor(public formBuilder: FormBuilder ,public forms: FormBuilder,public router:Router,public camera: Camera,) {
+  constructor(public formBuilder: FormBuilder , private geolocation : Geolocation, public forms: FormBuilder,public router:Router,public camera: Camera,) {
     
     this.loginForm = this.forms.group({
       image: new FormControl(this.businessdata.image, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -134,8 +137,35 @@ export class ProfilePage implements OnInit {
    
 
   }
-
+  obj = {};
+  // options : GeolocationOptions;
   ngOnInit() {
+    this.options = {
+      enableHighAccuracy : true
+  };
+
+ 
+
+  this.geolocation.getCurrentPosition(this.options).then((pos : Geoposition) => {
+
+      this.currentPos = pos;      
+      console.log(pos);
+      // this.addMap(pos.coords.latitude, pos.coords.longitude);
+     
+    this.obj = pos.coords;
+    console.log('Current Location in the profile page', this.obj);
+      // let latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      // let mapOptions = {
+      // center: latLng,
+      // zoom: 15,
+      // disableDefaultUI: true,
+      // mapTypeId: google.maps.MapTypeId.ROADMAP
+      // }
+      // this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      // this.addMarker();
+  },(err : PositionError)=>{
+      console.log("error : " + err.message);
+  });
     this.getProfile();
   }
 
@@ -189,7 +219,7 @@ export class ProfilePage implements OnInit {
   // }
   createAccount(){
         
-        this.db.collection('businesses').doc(this.businessdata.schoolname).set({
+        this.db.collection('drivingschools').doc(firebase.auth().currentUser.uid).set({
           address : this.businessdata.address,
           allday : this.businessdata.allday,
           cellnumber : this.businessdata.cellnumber,
@@ -201,7 +231,7 @@ export class ProfilePage implements OnInit {
           open : this.businessdata.open,
           registration : this.businessdata.registration,
           schoolname : this.businessdata.schoolname,
-          uid : firebase.auth().currentUser.uid
+          schooluid : firebase.auth().currentUser.uid
         }).then(res => {
           console.log('Profile created');
           this.getProfile()
@@ -215,7 +245,7 @@ export class ProfilePage implements OnInit {
 
       getProfile() {
         
-        this.db.collection('businesses').where('uid', '==', firebase.auth().currentUser.uid).get().then(res => {
+        this.db.collection('drivingschools').where('uid', '==', firebase.auth().currentUser.uid).get().then(res => {
           res.forEach(doc => {
             console.log(doc.data());
             this.businessdata.image = doc.data().image
@@ -235,6 +265,8 @@ export class ProfilePage implements OnInit {
           
         })
       }
+
+      
     }
 
     

@@ -107,7 +107,7 @@
             </div>
           </div> -->
         
-          <div class="card"  *ngFor="let comments of reviews">
+          <div class="card"  *ngFor="let r of reviews">
             <div class="ava">
               <ion-avatar slot="start">
                 <img src="../../assets/shapes.svg">
@@ -116,9 +116,9 @@
           
             <div class="comments">
               <ion-label>
-                <h2>{{comments.name}}</h2>
+                <h2>{{r.name}}</h2>
       
-                <p>{{comments.comments}}</p>
+                <p>{{r.comments}}</p>
               </ion-label>
             </div>
           </div>
@@ -127,9 +127,9 @@
     </div>
   
     
-    <ion-fab vertical="bottom" (click)="goToGraph()" horizontal="end" slot="fixed">
+    <!-- <ion-fab vertical="bottom" (click)="goToGraph()" horizontal="end" slot="fixed">
         <ion-fab-button>
           Graphs
         </ion-fab-button>
-      </ion-fab>
+      </ion-fab> -->
   </ion-content>

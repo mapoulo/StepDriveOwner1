@@ -34,29 +34,36 @@ export class TheMapPage implements OnInit {
    latitude : number;
   longitude : number;
   NewUseArray = {};
-  schools = []
+  schools = [];
+  requests = [];
+  NewRequeste = [];
 
   constructor( private geolocation : Geolocation, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
-      this.db.collection('request').onSnapshot(snapshot => {
-        snapshot.forEach(doc => {
-          // this.users = doc.data();
-          // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
-          this.users.push(doc.data());
-          console.log('My array is ',this.users);
-          
-
-          this.users.forEach(Customers => {
-            console.log('Customers in my array', Customers.schooluid);
-            console.log('Owners UID logged in', firebase.auth().currentUser.uid);
-            if(Customers.schooluid === firebase.auth().currentUser.uid){
-              this.addMarkersOnTheCustomersCurrentLocation(Customers.coords.lat, Customers.coords.lng);
-            }
-          }) 
-  
-        })
-      });
      
+    this.db.collection('bookings').onSnapshot(snapshot => {
 
+      
+      snapshot.forEach(doc => {
+        // this.users = doc.data();
+        // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
+        this.users.push(doc.data());
+        console.log('My array is ',this.users);
+
+        this.users.forEach(Customers => {
+          
+          console.log('Customers in my array', Customers);
+          console.log('My array is dddd ',this.users);
+          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
+
+          if(Customers.schooluid === firebase.auth().currentUser.uid){
+            console.log('one');
+            this.addMarkersOnTheCustomersCurrentLocation(Customers.location.lat, Customers.location.lng);
+          }
+        }) 
+      })
+
+
+    });
 
 
       // this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
@@ -85,6 +92,9 @@ export class TheMapPage implements OnInit {
   }
 
   Logout(){
+    this.users = [];
+    console.log('Your array is :', this.users);
+    
     this.AuthService.logoutUser();
     this.router.navigateByUrl('/login');
     }
@@ -96,9 +106,32 @@ export class TheMapPage implements OnInit {
 
 
   ionViewDidEnter(){
+
     this.getUserPosition();
+
+
+
+    this.db.collection('request').onSnapshot(snapshot => {
+      snapshot.forEach(doc => {
+        // this.users = doc.data();
+        // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
+        this.requests.push(doc.data());
+        console.log('My array is ',this.requests);
+        this.requests.forEach(Customers => {
+          console.log('Customers in my array', Customers.schooluid);
+          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
+          if(Customers.schooluid === firebase.auth().currentUser.uid){
+             this.NewRequeste.push(doc.data())
+          }
+        }) 
+
+      })
+    });
     // this.add();
     // this.loadMap() ;
+
+    
+   
 } 
 
 add(){
@@ -125,7 +158,7 @@ add(){
   })
 
  }
-
+ 
 
 takeData(){
    this.db.collection("users").where("name", "==", 'Nkwe')
@@ -154,6 +187,8 @@ takeData(){
         this.currentPos = pos;      
         console.log(pos);
         this.addMap(pos.coords.latitude, pos.coords.longitude);
+        console.log('Current Location', pos);
+        
         // let latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         // let mapOptions = {
         // center: latLng,
@@ -171,13 +206,27 @@ takeData(){
 
 
 addMap(lat:number,long:number){
+
   let latLng = new google.maps.LatLng(lat, long);
+
+  var grayStyles = [
+    {
+      featureType: "all",
+      stylers: [
+        { saturation: -10 },
+        { lightness: 0 }
+      ]
+    },
+  ];
+
   let mapOptions = {
   center: latLng,
   zoom: 10,
   disableDefaultUI: true,
-  mapTypeId: google.maps.MapTypeId.ROADMAP
+  mapTypeId: google.maps.MapTypeId.ROADMAP,
+  styles: grayStyles
   }
+
   this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 }
 
@@ -224,7 +273,7 @@ loadMap() {
   //==============================
 //addMarkers method adds the customer's location 
 addMarkersOnTheCustomersCurrentLocation(lat, lng){
-  console.log(lat);
+  console.log('Called ');
   // let marker = new google.maps.Marker({
   //   map: this.map,
   //   animation: google.maps.Animation.DROP,
@@ -233,11 +282,19 @@ addMarkersOnTheCustomersCurrentLocation(lat, lng){
   // });
 
   // -26.260901, 27.949600699999998
+//here
+const icon = {
+  url: '../../assets/icon/icon.png', // image url
+  scaledSize: new google.maps.Size(50, 50), // scaled size
+  origin: new google.maps.Point(0,0), // origin
+  anchor: new google.maps.Point(0, 0) // anchor
+};
 
   let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(lat, lng),
+      icon: icon
   });
 
 
@@ -286,6 +343,7 @@ addInfoWindow(marker, content){
 
 //addMarker method adds the marker on the on the current location of the device
 addMarker(){
+  //here
   let marker = new google.maps.Marker({
   map: this.map,
   animation: google.maps.Animation.DROP,

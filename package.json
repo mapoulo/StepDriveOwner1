@@ -40,6 +40,7 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-nativegeocoder": "3.2.2",
+    "cordova-sqlite-storage": "3.3.0",
     "core-js": "^2.5.4",
     "firebase": "^6.4.2",
     "firebase-admin": "^8.4.0",
