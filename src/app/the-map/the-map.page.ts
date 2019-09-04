@@ -93,8 +93,10 @@ export class TheMapPage implements OnInit {
 
   Logout(){
     this.users = [];
+    console.log('Your array is :', this.users);
+    
     this.AuthService.logoutUser();
-    this.router.navigateByUrl('/login')
+    this.router.navigateByUrl('/login');
     }
 
  

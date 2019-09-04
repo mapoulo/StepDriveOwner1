@@ -14,6 +14,12 @@ import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/ge
 
 
 export class ProfilePage implements OnInit {
+
+  display = false;
+  swipeUp() {
+    this.display = !this.display;
+  }
+  
   loginForm: FormGroup;
   
   users = {

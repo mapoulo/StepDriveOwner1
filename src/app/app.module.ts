@@ -15,13 +15,19 @@ import * as firebase from 'firebase'
 import { HttpClientModule } from "@angular/common/http";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 firebase.initializeApp(FIREBASE_CONFIG);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicSwipeAllModule,HttpClientModule],
+  imports: [BrowserModule, 
+  IonicModule.forRoot(),
+  AppRoutingModule,
+  IonicSwipeAllModule,
+  HttpClientModule,
+  IonicStorageModule.forRoot()],
   providers: [
     Geolocation,
     StatusBar,

@@ -4,34 +4,47 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content>
-  <div class="container">
-    <div class="backImg">
-        <ion-thumbnail>
-          <img src="../../assets/logo.png" />
-        </ion-thumbnail>
+
+    <div class="logo">
+      <img src="../../assets/blacklogo.svg" alt="">
     </div>
-    <div padding class="names">
-      <h1>Kennedy Mukhari</h1>
-      <h3>Driving Instructor</h3>
-      <h6>Registration Number: XF208554547</h6>
+    <div class="container">
+      <div class="form">
+        <h1>SIGNUP</h1>
+        <div>
+          <form class="login">
+            <div class="input">
+              <p>Email</p>
+              <input type="email">
+            </div>
+            <div class="error">
+              <div class="messages">
+              <!-- {{validate.message}} -->
+              </div>
+            </div>
+            <div class="input">
+              <p>Password</p>
+              <input type="email" type="password">
+            </div>
+            <div class="error">
+              <div class="messages">
+                <!-- {{validate.message}} -->
+              </div>
+            </div>
+            <div class="forgot">
+              <button (click)="forget()">Forgot Password?</button>
+            </div>
+            <div class="create">
+              <button (click)="Reg()">Create Account</button>
+            </div>
+            <br>
+            <div class="button">
+              <button>Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="contact">
-      <h1>078 546 2587</h1>
-      <h4>
-          Kennedymukhari@gmail.com
-      </h4>
+    <div class="footer">
+      <img src="../../assets/MaskFooter.svg" alt="">
     </div>
-    <div class="description">
-      <p>
-        Thumbnails are square components that usually wrap an image or icon. They can be used to make it easier to display
-         a group of larger images or provide a preview of the full-size image.
-      </p>
-    </div>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button>
-        <ion-icon name="create"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </div>
-</ion-content>
