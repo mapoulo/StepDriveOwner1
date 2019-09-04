@@ -39,31 +39,31 @@ export class TheMapPage implements OnInit {
   NewRequeste = [];
 
   constructor( private geolocation : Geolocation, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
-      this.db.collection('bookings').onSnapshot(snapshot => {
-
-        snapshot.forEach(doc => {
-          // this.users = doc.data();
-          // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
-          this.users.push(doc.data());
-          console.log('My array is ',this.users);
-
-          this.users.forEach(Customers => {
-            
-            console.log('Customers in my array', Customers);
-            console.log('My array is dddd ',this.users);
-            console.log('Owners UID logged in', firebase.auth().currentUser.uid);
-
-            if(Customers.schooluid === firebase.auth().currentUser.uid){
-              console.log('one');
-              this.addMarkersOnTheCustomersCurrentLocation(Customers.location.lat, Customers.location.lng);
-            }
-          }) 
-        })
-
-
-      });
      
+    this.db.collection('bookings').onSnapshot(snapshot => {
 
+      
+      snapshot.forEach(doc => {
+        // this.users = doc.data();
+        // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
+        this.users.push(doc.data());
+        console.log('My array is ',this.users);
+
+        this.users.forEach(Customers => {
+          
+          console.log('Customers in my array', Customers);
+          console.log('My array is dddd ',this.users);
+          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
+
+          if(Customers.schooluid === firebase.auth().currentUser.uid){
+            console.log('one');
+            this.addMarkersOnTheCustomersCurrentLocation(Customers.location.lat, Customers.location.lng);
+          }
+        }) 
+      })
+
+
+    });
 
 
       // this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
@@ -109,6 +109,8 @@ export class TheMapPage implements OnInit {
 
     this.getUserPosition();
 
+
+
     this.db.collection('request').onSnapshot(snapshot => {
       snapshot.forEach(doc => {
         // this.users = doc.data();
@@ -127,6 +129,9 @@ export class TheMapPage implements OnInit {
     });
     // this.add();
     // this.loadMap() ;
+
+    
+   
 } 
 
 add(){
@@ -284,6 +289,7 @@ const icon = {
   origin: new google.maps.Point(0,0), // origin
   anchor: new google.maps.Point(0, 0) // anchor
 };
+
   let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
