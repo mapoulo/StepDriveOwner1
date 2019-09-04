@@ -15,8 +15,17 @@ export class PastBPage implements OnInit {
     this.db.collection('review').onSnapshot(snapshot => {
       snapshot.forEach(doc => {
         // this.users = doc.data();
+        // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
         this.reviews.push(doc.data());
-        console.log('The reviews:',this.reviews);    
+        console.log('My array is ',this.reviews);
+        this.reviews.forEach(Customers => {
+          console.log('reviews in my array in my array', Customers.schooluid);
+          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
+          if(Customers.schooluid === firebase.auth().currentUser.uid){
+             this.reviews.push(doc.data())
+          }
+        }) 
+
       })
     });
 
