@@ -23,7 +23,13 @@ export class ResetPasswordPage implements OnInit {
   }
 
   ngOnInit() {}
+  goToLogin(){
+    this.router.navigate(['login'])
+  }
 
+  goToReg(){
+    this.router.navigate(['register'])
+  }
   resetPassword(resetPasswordForm: FormGroup): void {
     if (!resetPasswordForm.valid) {
       console.log(
