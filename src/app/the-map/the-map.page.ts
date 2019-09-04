@@ -86,7 +86,7 @@ export class TheMapPage implements OnInit {
 
   Logout(){
     this.AuthService.logoutUser();
-    this.router.navigateByUrl('/login')
+    this.router.navigateByUrl('/login');
     }
 
  

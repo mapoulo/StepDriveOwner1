@@ -45,7 +45,7 @@ export class RegisterPage implements OnInit {
       this.authService.signupUser(email, password).then(
         () => {
           this.loading.dismiss().then(() => {
-            this.router.navigateByUrl('home');
+            this.router.navigateByUrl('main');
           });
         },
         error => {
@@ -63,5 +63,7 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  
+  goToLogin() {
+    this.router.navigate(['login']);
+  }
 }

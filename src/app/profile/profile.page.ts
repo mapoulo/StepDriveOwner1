@@ -12,6 +12,12 @@ import { Router } from '@angular/router';
 
 
 export class ProfilePage implements OnInit {
+
+  display = false;
+  swipeUp() {
+    this.display = !this.display;
+  }
+  
   loginForm: FormGroup;
   
   users = {

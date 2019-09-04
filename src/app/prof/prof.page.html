@@ -4,29 +4,47 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content>
-  <div class="container">
-    <div class="avatar-images">
-      <img src="../../assets/Kanye-West.jpg" class="thumbavatar">
+
+    <div class="logo">
+      <img src="../../assets/blacklogo.svg" alt="">
     </div>
-    <div class="names">
-      <h1>Kanye West</h1>
-      <h5>Driving Instructor | Reg Number: XF2047</h5>
-      <h6>
-          <ion-icon name="mail"></ion-icon> Kennedymukhari@gmail.com<a href=""></a>
-      </h6>
-      <p><ion-icon name="call"></ion-icon><a href=""> 078 546 2587</a></p>
+    <div class="container">
+      <div class="form">
+        <h1>SIGNUP</h1>
+        <div>
+          <form class="login">
+            <div class="input">
+              <p>Email</p>
+              <input type="email">
+            </div>
+            <div class="error">
+              <div class="messages">
+              <!-- {{validate.message}} -->
+              </div>
+            </div>
+            <div class="input">
+              <p>Password</p>
+              <input type="email" type="password">
+            </div>
+            <div class="error">
+              <div class="messages">
+                <!-- {{validate.message}} -->
+              </div>
+            </div>
+            <div class="forgot">
+              <button (click)="forget()">Forgot Password?</button>
+            </div>
+            <div class="create">
+              <button (click)="Reg()">Create Account</button>
+            </div>
+            <br>
+            <div class="button">
+              <button>Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    
-    <div class="contact">
-      <p>
-          Kanye Omari West is an American rapper,
-          singer, songwriter, record producer, entrepreneur,
-          and fashion designer. His musical career has been
-          marked by dramatic changes in styles, incorporating
-          an eclectic range of influences including soul, baroque pop,
-          electro, indie rock, synth-pop, industrial, and gospel.
-      </p>
+    <div class="footer">
+      <img src="../../assets/MaskFooter.svg" alt="">
     </div>
-  </div>
-</ion-content>
