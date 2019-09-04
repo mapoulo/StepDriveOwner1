@@ -1,17 +1,5 @@
 
-
-
-
-
-
-
-
-
-
-
-
 <ion-content>
-<<<<<<< HEAD
   
 
       <form  [formGroup]="loginForm">
@@ -42,15 +30,15 @@
                                 {{validate.message}}
                               </div>
                             </div>
-                  <ion-item>
+                  <!-- <ion-item>
                     <ion-label position="floating">Registration</ion-label>
                     <ion-input type="tel"  formControlName="registration"  [(ngModel)]="businessdata.registration"></ion-input>
-                  </ion-item>
-                  <div class="error" *ngFor="let validate of validation_messages.registration">
+                  </ion-item> -->
+                  <!-- <div class="error" *ngFor="let validate of validation_messages.registration">
                               <div class="messages" *ngIf="loginForm.get('registration').hasError(validate.type) && (loginForm.get('registration').dirty || loginForm.get('registration').touched)">
                                 {{validate.message}}
                               </div>
-                            </div>
+                            </div> -->
                   
                   <ion-item>
                         <ion-label position="floating">Email</ion-label>
@@ -91,10 +79,10 @@
       
                       <ion-item>
                         <ion-label position="floating">address</ion-label>
-                        <ion-input type="cost"  formControlName="content"  [(ngModel)]="businessdata.content"></ion-input>
+                        <ion-input type="cost"  formControlName="address"  [(ngModel)]="businessdata.address"></ion-input>
                       </ion-item>
                       <div class="error" *ngFor="let validate of validation_messages.content">
-                              <div class="messages" *ngIf="loginForm.get('content').hasError(validate.type) && (loginForm.get('content').dirty || loginForm.get('content').touched)">
+                              <div class="messages" *ngIf="loginForm.get('address').hasError(validate.type) && (loginForm.get('address').dirty || loginForm.get('address').touched)">
                                 {{validate.message}}
                               </div>
                             </div>
@@ -145,59 +133,5 @@
       
       
       </form>    
-      
-      
-      
-      
-      
-           
+        
       </ion-content>
-=======
-  <div class="container">
-    <div class="create">
-      <img src="../../assets/Upload-Folder-icon.png" class="img" alt="">
-    </div>
-    <div padding class="inputs">
-      <ion-list no-lines>
-        <ion-item>
-          <ion-label position="floating">Name of driving school</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Registration Number</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Phone Number</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Cost per person</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label position="floating">Cost per person</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
-
-          <ion-item>
-          <ion-label position="floating">Description</ion-label>
-            <ion-textarea></ion-textarea>
-          </ion-item>
-      </ion-list>
-    </div>
-    <div class="btn">
-      <ion-button expand="full" >Submit</ion-button>
-    </div>
-  </div>
-</ion-content>
->>>>>>> 7fe93e3e44f3146079ea26b06442cd174d5753cf

@@ -183,7 +183,7 @@ export class ProfilePage implements OnInit {
   // }
   createAccount(){
         
-        this.db.collection('businesses').doc(this.businessdata.schoolname).set({
+        this.db.collection('drivingschools').doc(firebase.auth().currentUser.uid).set({
           address : this.businessdata.address,
           allday : this.businessdata.allday,
           cellnumber : this.businessdata.cellnumber,
@@ -195,7 +195,7 @@ export class ProfilePage implements OnInit {
           open : this.businessdata.open,
           registration : this.businessdata.registration,
           schoolname : this.businessdata.schoolname,
-          uid : firebase.auth().currentUser.uid
+          schooluid : firebase.auth().currentUser.uid
         }).then(res => {
           console.log('Profile created');
           this.getProfile()
@@ -209,7 +209,7 @@ export class ProfilePage implements OnInit {
 
       getProfile() {
         
-        this.db.collection('businesses').where('uid', '==', firebase.auth().currentUser.uid).get().then(res => {
+        this.db.collection('drivingschools').where('uid', '==', firebase.auth().currentUser.uid).get().then(res => {
           res.forEach(doc => {
             console.log(doc.data());
             this.businessdata.image = doc.data().image
