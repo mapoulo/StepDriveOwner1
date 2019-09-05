@@ -5,6 +5,8 @@ import { Camera,CameraOptions } from '@ionic-native/Camera/ngx';
 import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
+import { PopoverController } from '@ionic/angular';
+import { PopOverComponent } from '../pop-over/pop-over.component';
 
 @Component({
   selector: 'app-profile',
@@ -117,7 +119,12 @@ export class ProfilePage implements OnInit {
   userProfile: any;
   isuploaded: boolean;
   imageSelected: boolean;
-  constructor(public formBuilder: FormBuilder , private geolocation : Geolocation, public forms: FormBuilder,public router:Router,public camera: Camera,) {
+  constructor(public formBuilder: FormBuilder ,
+     private geolocation : Geolocation, 
+     public forms: FormBuilder,
+     public router:Router,
+     public camera: Camera,
+     public popoverController: PopoverController) {
     
     this.loginForm = this.forms.group({
       image: new FormControl(this.businessdata.image, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -137,6 +144,17 @@ export class ProfilePage implements OnInit {
    
 
   }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopOverComponent,
+      event: ev,
+      animated: true,
+      showBackdrop: true
+    });
+    return await popover.present();
+  }
+
   obj = {};
   // options : GeolocationOptions;
   ngOnInit() {
@@ -266,6 +284,7 @@ export class ProfilePage implements OnInit {
         })
       }
 
+      
       
     }
 
