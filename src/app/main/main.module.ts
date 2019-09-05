@@ -34,11 +34,11 @@ const routes: Routes = [
 
 
       {
-        path: 'bookings',
+        path: 'help',
         children: [
           {
             path: '',
-            loadChildren: '../pastbookings/pastbookings.module#PastbookingsPageModule'
+            loadChildren: './help/help.module#HelpPageModule'
           }
         ]
       },

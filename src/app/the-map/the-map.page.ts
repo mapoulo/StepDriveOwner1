@@ -7,6 +7,7 @@ import * as firebase from 'firebase';
 import { AuthService } from '../../app/user/auth.service';
 import { LoginPage } from '../login/login.page';
 import { Router } from '@angular/router';
+import { SaveDataService } from '../save-data.service';
 
  
 
@@ -30,15 +31,16 @@ export class TheMapPage implements OnInit {
   @ViewChild('map', {static: false}) mapElement: ElementRef;
   db = firebase.firestore();
   users = [];
-   map: any;
-   latitude : number;
+  map: any;
+  latitude : number;
   longitude : number;
   NewUseArray = {};
   schools = [];
   requests = [];
   NewRequeste = [];
+  AcceptedCustomer = {};
 
-  constructor( private geolocation : Geolocation, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
+  constructor( private geolocation : Geolocation, public data : SaveDataService, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
 
 
    
@@ -116,11 +118,14 @@ export class TheMapPage implements OnInit {
 
   Array(){
     console.log('Array Data:', this.users);
-    
   }
 
 
-  Accept(){
+  Accept(Customer){
+
+   this.AcceptedCustomer = Customer;
+    this.data.DataSaved = Customer
+    console.log('Accept method called', this.data.DataSaved);
 
   }
 
