@@ -39,31 +39,10 @@ export class TheMapPage implements OnInit {
   NewRequeste = [];
 
   constructor( private geolocation : Geolocation, public AuthService : AuthService,  public router:Router, private nativeGeocoder: NativeGeocoder) { 
-     
-    this.db.collection('bookings').onSnapshot(snapshot => {
-
-      
-      snapshot.forEach(doc => {
-        // this.users = doc.data();
-        // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
-        this.users.push(doc.data());
-        console.log('My array is ',this.users);
-
-        this.users.forEach(Customers => {
-          
-          console.log('Customers in my array', Customers);
-          console.log('My array is dddd ',this.users);
-          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
-
-          if(Customers.schooluid === firebase.auth().currentUser.uid){
-            console.log('one');
-            this.addMarkersOnTheCustomersCurrentLocation(Customers.location.lat, Customers.location.lng);
-          }
-        }) 
-      })
 
 
-    });
+   
+   
 
 
       // this.db.collection("users").where("DSuid", "==", firebase.auth().currentUser.uid)
@@ -82,21 +61,103 @@ export class TheMapPage implements OnInit {
   
   }
 
+  ionViewDidEnter(){
+    this.getUserPosition();
+
+    this.db.collection('bookings').onSnapshot(snapshot => {
+      snapshot.forEach(doc => {
+
+        this.requests.push(doc.data());
+        
+        this.requests.forEach(Customers => {
+          console.log('Customers in my array', Customers.schooluid);
+          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
+          if(Customers.schooluid === firebase.auth().currentUser.uid){
+            this.NewRequeste  = [];
+             this.NewRequeste.push(doc.data())
+          }
+        }) 
+      })
+    });
+   
+  
+    let booking = {
+      docid: '',
+      doc: {}
+    }
+    
+ 
+      this.db.collection('bookings').onSnapshot(snapshot => {
+
+          snapshot.forEach(doc => {
+          booking.docid = doc.id
+          booking.doc = doc.data()
+          // console.log('The obj is', booking);
+          console.log('The id is',booking.docid);
+          this.users.push(booking);
+          console.log('The obj is', booking);
+          console.log('The array is', this.users);
+          // console.log('The id is',booking.docid);
+        });
+
+
+        this.users.forEach(Customers => {          
+          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
+          if(Customers.doc.schooluid === firebase.auth().currentUser.uid){
+            this.addMarkersOnTheCustomersCurrentLocation(Customers.doc.location.lat, Customers.doc.location.lng);
+          }
+        })
+
+       
+      });
+      console.log('My array is ',this.users);
+  
+  }
+
   Array(){
     console.log('Array Data:', this.users);
     
   }
 
+
+  Accept(){
+
+  }
+
+  
   ngOnInit() {
     // this.add()
   }
 
-  Logout(){
-    this.users = [];
-    console.log('Your array is :', this.users);
-    
-    this.AuthService.logoutUser();
-    this.router.navigateByUrl('/login');
+
+  Decline(doc, docid){
+
+    console.log('Decline method called', doc, docid);
+    let doc_id : string;
+
+    this.db.collection('bookings').doc(docid).set({confirmed: false}, {merge: true});
+    //   //  console.log('Decline method is called', obj);
+    //   //  var docRef = firebase.firestore().collection("users").doc(obj.uid);
+    //   //  docRef.update({confirmed: false});
+    //   //  let documentRef = this.db.firestore.doc('col/doc');
+
+    //   //  documentRef.update({foo: 'bar'}).then(res => {
+    //   //    console.log(`Document updated at ${res.updateTime}`);
+    //   //  });
+  
+  }
+
+
+   Logout() {
+      this.users = [];
+      console.log("The user array is empty see?",this.users);
+      
+      this.requests = [];
+      this.NewRequeste = [];
+      console.log('Your array is :', this.users);
+      firebase.auth().signOut().then(res => {
+        this.router.navigateByUrl('/login');
+      })
     }
 
  
@@ -105,34 +166,11 @@ export class TheMapPage implements OnInit {
 
 
 
-  ionViewDidEnter(){
-
-    this.getUserPosition();
 
 
 
-    this.db.collection('request').onSnapshot(snapshot => {
-      snapshot.forEach(doc => {
-        // this.users = doc.data();
-        // this.addMarkersOnTheCustomersCurrentLocation(this.users.coords.lat, this.users.coords.lng);
-        this.requests.push(doc.data());
-        console.log('My array is ',this.requests);
-        this.requests.forEach(Customers => {
-          console.log('Customers in my array', Customers.schooluid);
-          console.log('Owners UID logged in', firebase.auth().currentUser.uid);
-          if(Customers.schooluid === firebase.auth().currentUser.uid){
-             this.NewRequeste.push(doc.data())
-          }
-        }) 
 
-      })
-    });
-    // this.add();
-    // this.loadMap() ;
 
-    
-   
-} 
 
 add(){
   
@@ -298,7 +336,8 @@ const icon = {
   });
 
 
-  let content = "<p>Customer's Location!</p>";          
+  let content = "<p>Customer's Location!</p>"; 
+           
 
   this.addInfoWindow(marker, content);
 
@@ -343,6 +382,7 @@ addInfoWindow(marker, content){
 
 //addMarker method adds the marker on the on the current location of the device
 addMarker(){
+
   //here
   let marker = new google.maps.Marker({
   map: this.map,
@@ -358,18 +398,22 @@ addMarker(){
   google.maps.event.addListener(marker, 'click', () => {
   infoWindow.open(this.map, marker);
   });
+//Add a radius on the map
+  // new google.maps.Circle({
+  //   strokeColor: '#FF0000',
+  //   strokeOpacity: 0.8,
+  //   strokeWeight: 2,
+  //   fillColor: '#FF0000',
+  //   fillOpacity: 0.35,
+  //   map: this.map,
+  //   center: new google.maps.LatLng(-26.2601316, 27.9495796),
+  //   radius: 25000
+  // });
 
-  new google.maps.Circle({
-    strokeColor: '#FF0000',
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: '#FF0000',
-    fillOpacity: 0.35,
-    map: this.map,
-    center: new google.maps.LatLng(-26.2601316, 27.9495796),
-    radius: 25000
-  });
+
 }
+
+
 goToProfile(){
   this.router.navigate(['profile']);
 }

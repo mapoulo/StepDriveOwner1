@@ -40,12 +40,12 @@
             <p>Lessons: {{data.lessons}}</p> -->
             
           </div>
-          <p>{{data.location.address}}</p>
+          <p>{{data.doc.location.address}}</p>
           <div class="call">
-            <button expand="full" >Decline</button>
+            <button expand="full" (click)="Decline(data.doc, data.docid)">Decline</button>
           </div>
           <div class="request">
-            <button expand="full" (click)="viewSchool(u)">Accept</button>
+            <button expand="full" (click)="Accept()">Accept</button>
           </div>
         </div>
       </div>

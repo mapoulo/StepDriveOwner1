@@ -70,6 +70,7 @@ export class ProfilePage implements OnInit {
   showData(){
     console.log('hhhhh',this.businessdata);
     
+    
   }
 
 
