@@ -1,7 +1,6 @@
 
 <ion-content>
   
-  ​
         <form  [formGroup]="loginForm">
                     <div class="container">
                                 <div class="header">
@@ -12,7 +11,7 @@
                                 <div class="create">
                                     <img src="../../assets/Upload-Folder-icon.png" class="img" alt="" (click)="selectImage() ">
                                   </div>
-                                  <img  src="{{profileImage}}">
+                                  <img  src="{{this.businessdata.image}}">
                       <div *ngIf="!isprofile" class="profile-form">
                         <ion-item>
                           <!-- <ion-button (click)="selectImage() ">

@@ -5,7 +5,7 @@ import { Camera,CameraOptions } from '@ionic-native/Camera/ngx';
 import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
-
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -16,6 +16,7 @@ import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/ge
 export class ProfilePage implements OnInit {
 
   display = false;
+  toastCtrl: any;
   swipeUp() {
     this.display = !this.display;
   }
@@ -51,7 +52,7 @@ export class ProfilePage implements OnInit {
     open: '',
     closed: '',
     allday: 'true',
-    uid: ''
+    schooluid: ''
   }
 
   showData(){
@@ -63,8 +64,7 @@ export class ProfilePage implements OnInit {
   validation_messages = {
     'schoolname': [
       {type: 'required', message: 'schoolname is required.'},
-      {type: 'minlength', message: 'schoolname is valid.'},
-      {type: 'maxlength', message: 'schoolname must be less than 10 char or less'},
+   
     ],
     'registration': [
      {type: 'required', message: 'registration is required.'},
@@ -72,9 +72,9 @@ export class ProfilePage implements OnInit {
      {type: 'maxlength', message: 'registration must be less than 8 char or less'},
    ],
    'email': [
-    {type: 'required', message: 'email is required.'},
-    {type: 'minlength', message: 'email is valid.'},
-    {type: 'maxlength', message: 'email must be less than 8 char or less'},
+    {type: 'required', message: 'email is valid.'},
+    {type: 'minlength', message: 'email is required.'},
+
   ],
   'cellnumber': [
     {type: 'required', message: 'cellnumber is required.'},
@@ -117,11 +117,11 @@ export class ProfilePage implements OnInit {
   userProfile: any;
   isuploaded: boolean;
   imageSelected: boolean;
-  constructor(public formBuilder: FormBuilder , private geolocation : Geolocation, public forms: FormBuilder,public router:Router,public camera: Camera,) {
+  constructor(public formBuilder: FormBuilder , private geolocation : Geolocation, public forms: FormBuilder,public router:Router,public camera: Camera,public alertController: AlertController) {
     
     this.loginForm = this.forms.group({
-      image: new FormControl(this.businessdata.image, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-      schoolname: new FormControl(this.businessdata.schoolname, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
+      image: new FormControl(this.businessdata.image, Validators.compose([Validators.required])),
+      schoolname: new FormControl(this.businessdata.schoolname, Validators.compose([Validators.required])),
       registration: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
       email: new FormControl(this.businessdata.registration, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       cellnumber: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
@@ -217,35 +217,50 @@ export class ProfilePage implements OnInit {
   // await(){
   //   this.router.navigateByUrl('/Awaiting')
   // }
-  createAccount(){
-        
-        this.db.collection('drivingschools').doc(firebase.auth().currentUser.uid).set({
-          address : this.businessdata.address,
-          allday : this.businessdata.allday,
-          cellnumber : this.businessdata.cellnumber,
-          closed : this.businessdata.closed,
-          cost : this.businessdata.cost,
-          desc : this.businessdata.desc,
-          email : this.businessdata.email,
-          image : this.businessdata.image,
-          open : this.businessdata.open,
-          registration : this.businessdata.registration,
-          schoolname : this.businessdata.schoolname,
-          schooluid : firebase.auth().currentUser.uid
-        }).then(res => {
-          console.log('Profile created');
-          this.getProfile()
-          this.router.navigateByUrl('/awaiting')
-        }).catch(error => {
-          console.log('Error');
-        });
+  //inserting driving drivers school details to the database 
+  async  createAccount(){
+        if (this.businessdata.open != this.businessdata.closed){
+          this.db.collection('drivingschools').doc(firebase.auth().currentUser.uid).set({
+            address : this.businessdata.address,
+            allday : this.businessdata.allday,
+            cellnumber : this.businessdata.cellnumber,
+            closed : this.businessdata.closed,
+            cost : this.businessdata.cost,
+            desc : this.businessdata.desc,
+            email : this.businessdata.email,
+            image : this.businessdata.image,
+            open : this.businessdata.open,
+            registration : this.businessdata.registration,
+            schoolname : this.businessdata.schoolname,
+            schooluid : firebase.auth().currentUser.uid
+          }).then(res => {
+            console.log('Profile created');
+            this.getProfile()
+            this.router.navigateByUrl('/the-map')
+          }).catch(error => {
+            console.log('Error');
+          });
+  //allrt for time 
+        }else{
 
+          const alert = await this.alertController.create({
+            // header: 'Alert',
+            // subHeader: 'Subtitle',
+            message: 'time canot not be the same .',
+            buttons: ['OK']
+          });
+      
+          await alert.present();
+          
+          
+        }
+        
       }
 
 
       getProfile() {
         
-        this.db.collection('drivingschools').where('uid', '==', firebase.auth().currentUser.uid).get().then(res => {
+        this.db.collection('drivingschools').where('schooluid', '==', firebase.auth().currentUser.uid).get().then(res => {
           res.forEach(doc => {
             console.log(doc.data());
             this.businessdata.image = doc.data().image
@@ -258,6 +273,7 @@ export class ProfilePage implements OnInit {
             this.businessdata.open = doc.data().open
             this.businessdata.address = doc.data().address
             this.businessdata.closed = doc.data().closed
+            
           })
          
         }).catch(err => {
