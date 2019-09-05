@@ -41,6 +41,7 @@ export class ProfilePage implements OnInit {
   currentPos : Geoposition;
   db = firebase.firestore();
   storage = firebase.storage().ref();
+
   businessdata = {
     schoolname: '',
     registration: '',
@@ -49,6 +50,11 @@ export class ProfilePage implements OnInit {
     cellnumber: '',
     cost: '',
     desc: '',
+    package: {
+      amount: '',
+      name: '',
+      number: ''
+    },
     address: '',
     open: '',
     closed: '',
