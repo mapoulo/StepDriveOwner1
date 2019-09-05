@@ -44,6 +44,13 @@ export class ProfilePage implements OnInit {
   currentPos : Geoposition;
   db = firebase.firestore();
   storage = firebase.storage().ref();
+
+  package = {
+    name: '',
+    amount: '',
+    number: ''
+  };
+
   businessdata = {
     schoolname: '',
     registration: '',
@@ -57,16 +64,11 @@ export class ProfilePage implements OnInit {
     closed: '',
     allday: 'true',
     schooluid: '',
-   package :{
-
-    name:'',
-    number:'',
-    amount:''
-   },
+  
   }
 
   showData(){
-    console.log(this.businessdata);
+    console.log('hhhhh',this.businessdata);
     
   }
 
@@ -261,6 +263,9 @@ export class ProfilePage implements OnInit {
   //   this.router.navigateByUrl('/Awaiting')
   // }
   //inserting driving drivers school details to the database 
+
+
+ 
   async  createAccount(){
         if (this.businessdata.open != this.businessdata.closed){
           this.db.collection('drivingschools').doc(firebase.auth().currentUser.uid).set({
@@ -273,6 +278,9 @@ export class ProfilePage implements OnInit {
             email : this.businessdata.email,
             image : this.businessdata.image,
             open : this.businessdata.open,
+            packages :{name: this.package.name,
+    amount: this.package.amount,
+  number: this.package.number},
             
             registration : this.businessdata.registration,
             schoolname : this.businessdata.schoolname,
@@ -298,6 +306,8 @@ export class ProfilePage implements OnInit {
           
           
         }
+        
+        console.log('The data',this.package);
         
       }
 
