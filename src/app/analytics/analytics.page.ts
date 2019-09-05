@@ -45,7 +45,7 @@ charts: any;
     
   }
   getRequests() {
-    this.db.collection('request').where('schooluid', '==',this.user.uid).get().then(res => {
+    this.db.collection('bookings').where('schooluid', '==',this.user.uid).get().then(res => {
       console.log(res);
       
       res.forEach(doc => {
@@ -90,7 +90,7 @@ charts: any;
         datasets: [{
           label: 'Lessons offered per week',
           // data: [this.mon.length, this.tue.length, this.wed.length, this.thu.length, this.fri.length, this.sat.length, this.sun.length],
-           data: [1, this.tue.length, this.wed.length, this.thu.length, this.fri.length, this.sat.length, this.sun.length],
+           data: [this.mon.length, this.tue.length, this.wed.length, this.thu.length, this.fri.length, this.sat.length, this.sun.length],
           backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
           borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
           borderWidth: 1
