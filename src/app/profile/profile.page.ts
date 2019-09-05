@@ -5,6 +5,8 @@ import { Camera,CameraOptions } from '@ionic-native/Camera/ngx';
 import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
+import { PopoverController } from '@ionic/angular';
+import { PopOverComponent } from '../pop-over/pop-over.component';
 import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-profile',
@@ -33,7 +35,9 @@ export class ProfilePage implements OnInit {
     open: '',
     closed: '',
     allday: '',
-   
+   name:'',
+   number: '',
+   amount:''
   }
 
   options : GeolocationOptions;
@@ -52,7 +56,13 @@ export class ProfilePage implements OnInit {
     open: '',
     closed: '',
     allday: 'true',
-    schooluid: ''
+    schooluid: '',
+   package :{
+
+    name:'',
+    number:'',
+    amount:''
+   },
   }
 
   showData(){
@@ -105,6 +115,19 @@ export class ProfilePage implements OnInit {
     {type: 'required', message: 'Password is required.'},
     {type: 'minlength', message: 'password must be atleast 6 char or more.'},
     {type: 'maxlength', message: 'Password must be less than 8 char or less'},
+  ],
+  'name': [
+    {type: 'required', message: 'name is required.'},
+   
+  ],
+  'number': [
+    {type: 'required', message: 'Password is required.'},
+    {type: 'minlength', message: 'password must be atleast 6 char or more.'},
+    {type: 'maxlength', message: 'Password must be less than 8 char or less'},
+  ],
+  'amount': [
+    {type: 'required', message: 'amount is required.'},
+  
   ]
   }
 
@@ -117,11 +140,20 @@ export class ProfilePage implements OnInit {
   userProfile: any;
   isuploaded: boolean;
   imageSelected: boolean;
-  constructor(public formBuilder: FormBuilder , private geolocation : Geolocation, public forms: FormBuilder,public router:Router,public camera: Camera,public alertController: AlertController) {
+  constructor(public formBuilder: FormBuilder ,
+     private geolocation : Geolocation, 
+     public forms: FormBuilder,
+     public router:Router,
+     public camera: Camera,
+     public alertController: AlertController,
+     public popoverController: PopoverController) 
+
+     {
     
     this.loginForm = this.forms.group({
       image: new FormControl(this.businessdata.image, Validators.compose([Validators.required])),
       schoolname: new FormControl(this.businessdata.schoolname, Validators.compose([Validators.required])),
+      
       registration: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
       email: new FormControl(this.businessdata.registration, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
       cellnumber: new FormControl(this.businessdata.cellnumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])),
@@ -137,6 +169,17 @@ export class ProfilePage implements OnInit {
    
 
   }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopOverComponent,
+      event: ev,
+      animated: true,
+      showBackdrop: true
+    });
+    return await popover.present();
+  }
+
   obj = {};
   // options : GeolocationOptions;
   ngOnInit() {
@@ -230,6 +273,7 @@ export class ProfilePage implements OnInit {
             email : this.businessdata.email,
             image : this.businessdata.image,
             open : this.businessdata.open,
+            
             registration : this.businessdata.registration,
             schoolname : this.businessdata.schoolname,
             schooluid : firebase.auth().currentUser.uid
@@ -282,6 +326,7 @@ export class ProfilePage implements OnInit {
         })
       }
 
+      
       
     }
 
