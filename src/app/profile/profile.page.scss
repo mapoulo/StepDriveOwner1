@@ -115,4 +115,15 @@
       }
     }
    }
+   .pack {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     h2 {
+      background: linear-gradient(#4C0A0A,#790B0B);
+      width: 60%;
+      color: white;
+      border-radius: 200px;
+     }
+   }
 }
