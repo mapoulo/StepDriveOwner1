@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
+import { PopOverComponent } from '../pop-over/pop-over.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage,PopOverComponent],
+  entryComponents: [
+    PopOverComponent
+  ]
 })
 export class ProfilePageModule {}

@@ -1,137 +1,129 @@
+<ion-content class="no-scroll">
 
-<ion-content>
+    ​
   
-  ​
-        <form  [formGroup]="loginForm">
-                    <div class="container">
-                                <div class="header">
-                                      <h2>Driving School Detail Setup</h2>
-                                </div>
+  <div no-padding class="container">
+      <form [formGroup]="loginForm">
+  
+  
+  
+  
+  <div  class="avatar-images">
+    <img *ngIf="!isprofile" (click)="selectImage()" src="../../assets/logo.png" class="thumbavatar">\
+    <!-- <img *ngIf="isprofile" src="{{profileImage}}"> -->
+  </div>
         
-                    
-                                <div class="create">
-                                    <img src="../../assets/Upload-Folder-icon.png" class="img" alt="" (click)="selectImage() ">
+        <div  class="profile-form">
+  
+          <p *ngIf="isuploading">Uploading</p>
+          <p *ngIf="isuploaded">Done</p>
+          <div class="input">
+              <p>SchoolName</p>
+              <input type="text" formControlName="schoolname" [(ngModel)]="businessdata.schoolname">
+            </div>
+          <div class="error" *ngFor="let validate of validation_messages.schoolname">
+            <div class="messages" 
+            *ngIf="loginForm.get('schoolname').hasError(validate.type) && (loginForm.get('schoolname').dirty || loginForm.get('schoolname').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+  
+            <div class="input">
+              <p>Email</p>
+                <input type="email" formControlName="email" [(ngModel)]="businessdata.email">
+              </div>
+  
+          <div class="error" *ngFor="let validate of validation_messages.email">
+            <div class="messages" 
+            *ngIf="loginForm.get('email').hasError(validate.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+  
+          <div class="input">
+              <p>CellNumber</p>
+              <input type="tel" formControlName="cellnumber" [(ngModel)]="businessdata.cellnumber">
+            </div>
+  
+          <div class="error" *ngFor="let validate of validation_messages.cellnumber">
+            <div class="messages"
+            *ngIf="loginForm.get('cellnumber').hasError(validate.type) && (loginForm.get('cellnumber').dirty || loginForm.get('cellnumber').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+          <div class="input">
+              <p>Cost</p>
+              <input type="tel" formControlName="cost" [(ngModel)]="businessdata.cost">
+            </div>
+          <div class="error" *ngFor="let validate of validation_messages.cost">
+            <div class="messages"
+            *ngIf="loginForm.get('cost').hasError(validate.type) && (loginForm.get('cost').dirty || loginForm.get('cost').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+          <!--                   
+                          <div class="error" *ngFor="let validate of validation_messages.schoolname">
+                                  <div class="messages" *ngIf="loginForm.get('schoolname').hasError(validate.type) && (loginForm.get('schoolname').dirty || loginForm.get('schoolname').touched)">
+                                    {{validate.message}}
                                   </div>
-                                  <img  src="{{profileImage}}">
-                      <div *ngIf="!isprofile" class="profile-form">
-                        <ion-item>
-                          <!-- <ion-button (click)="selectImage() ">
-                            Select Image
-                          </ion-button> -->
-                    </ion-item>
-                    <p *ngIf="isuploading">Uploading</p>
-                    <p *ngIf="isuploaded">Done</p>
-                    <ion-item>
-                      <ion-label position="floating" >schoolname</ion-label>
-                      <ion-input type="text"  formControlName="schoolname"  [(ngModel)]="businessdata.schoolname"></ion-input>
-                    </ion-item>
-                    <div class="error" *ngFor="let validate of validation_messages.schoolname">
-                                <div class="messages" *ngIf="loginForm.get('schoolname').hasError(validate.type) && (loginForm.get('schoolname').dirty || loginForm.get('schoolname').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div>
-                    <!-- <ion-item>
-                      <ion-label position="floating">Registration</ion-label>
-                      <ion-input type="tel"  formControlName="registration"  [(ngModel)]="businessdata.registration"></ion-input>
-                    </ion-item> -->
-                    <!-- <div class="error" *ngFor="let validate of validation_messages.registration">
-                                <div class="messages" *ngIf="loginForm.get('registration').hasError(validate.type) && (loginForm.get('registration').dirty || loginForm.get('registration').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div> -->
-                    
-                    <ion-item>
-                          <ion-label position="floating">Email</ion-label>
-                          <ion-input type="email"  formControlName="email" [(ngModel)]="businessdata.email"></ion-input>
-                        </ion-item>
-                    
-                        <div class="error" *ngFor="let validate of validation_messages.email">
-                                <div class="messages" *ngIf="loginForm.get('email').hasError(validate.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div>
-                    
-                        <ion-item>
-                          <ion-label position="floating">cellnumber</ion-label>
-                          <ion-input type="tel"  formControlName="cellnumber"  [(ngModel)]="businessdata.cellnumber"></ion-input>
-                        </ion-item>
-                        <div class="error" *ngFor="let validate of validation_messages.cellnumber">
-                                <div class="messages" *ngIf="loginForm.get('cellnumber').hasError(validate.type) && (loginForm.get('cellnumber').dirty || loginForm.get('cellnumber').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div>
-                        <ion-item>
-                          <ion-label position="floating">cost</ion-label>
-                          <ion-input type="tel"  formControlName="cost"  [(ngModel)]="businessdata.cost"><br></ion-input>
-                        </ion-item>
-                        <div class="error" *ngFor="let validate of validation_messages.cost">
-                                <div class="messages" *ngIf="loginForm.get('cost').hasError(validate.type) && (loginForm.get('cost').dirty || loginForm.get('cost').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div>
-  <!--                   
-                        <div class="error" *ngFor="let validate of validation_messages.schoolname">
-                                <div class="messages" *ngIf="loginForm.get('schoolname').hasError(validate.type) && (loginForm.get('schoolname').dirty || loginForm.get('schoolname').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div> -->
-        
-        
-                        <ion-item>
-                          <ion-label position="floating">address</ion-label>
-                          <ion-input type="cost"  formControlName="address"  [(ngModel)]="businessdata.address"></ion-input>
-                        </ion-item>
-                        <div class="error" *ngFor="let validate of validation_messages.content">
-                                <div class="messages" *ngIf="loginForm.get('address').hasError(validate.type) && (loginForm.get('address').dirty || loginForm.get('address').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div>
-                        <ion-item>
-                    
-                          
-                                <ion-label position="floating">Description</ion-label>
-                                <ion-input type="text"  formControlName="desc" [(ngModel)]="businessdata.desc"></ion-input>
-                              </ion-item>
-        
-                              <div class="error" *ngFor="let validate of validation_messages.schoolname">
-                                      <div class="messages" *ngIf="loginForm.get('desc').hasError(validate.type) && (loginForm.get('desc').dirty || loginForm.get('desc').touched)">
-                                        {{validate.message}}
-                                      </div>
-                                    </div>
-        
-                       
-        
-                        <ion-item>
-                            <ion-label position="floating">Open Time</ion-label>
-                            <ion-datetime displayFormat="HH:mm"  formControlName="open" [(ngModel)]="businessdata.open"></ion-datetime>
-                </ion-item>
-                        <div class="error" *ngFor="let validate of validation_messages.open">
-                                <div class="messages" *ngIf="loginForm.get('open').hasError(validate.type) && (loginForm.get('open').dirty || loginForm.get('open').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div>
-        
-                              <ion-item>
-                                  <ion-label position="floating">closed</ion-label>
-                                  <ion-datetime displayFormat="HH:mm"  formControlName="closed" [(ngModel)]="businessdata.closed"></ion-datetime>
-                      </ion-item>
-                        <div class="error" *ngFor="let validate of validation_messages.closed">
-                                <div class="messages" *ngIf="loginForm.get('closed').hasError(validate.type) && (loginForm.get('closed').dirty || loginForm.get('closed').touched)">
-                                  {{validate.message}}
-                                </div>
-                              </div>
-  ​
-                    <ion-button expand="full" (click)="createAccount()">
-                      Done
-                    </ion-button>
-                  
-                    
-                    
-                      </div>
-                     
-                          </div>
-        
-        
-        </form>    
-          
-        </ion-content>
+                                </div> -->
+  
+  
+                                <div class="input">
+                                    <p>Address</p>
+                                    <input type="cost" formControlName="address" [(ngModel)]="businessdata.address">
+                                  </div>
+          <div class="error" *ngFor="let validate of validation_messages.content">
+            <div class="messages"
+            *ngIf="loginForm.get('address').hasError(validate.type) && (loginForm.get('address').dirty || loginForm.get('address').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+          <div class="input">
+              <p>Description</p>
+              <input type="text" formControlName="desc" [(ngModel)]="businessdata.desc">
+            </div>
+  
+          <div class="error" *ngFor="let validate of validation_messages.schoolname">
+            <div class="messages"
+            *ngIf="loginForm.get('desc').hasError(validate.type) && (loginForm.get('desc').dirty || loginForm.get('desc').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+  
+  
+  
+          <ion-item>
+            <ion-label position="floating">Open Time</ion-label>
+            <ion-datetime formControlName="open" [(ngModel)]="businessdata.open"></ion-datetime>
+          </ion-item>
+          <div class="error" *ngFor="let validate of validation_messages.open">
+            <div class="messages"
+            *ngIf="loginForm.get('open').hasError(validate.type) && (loginForm.get('open').dirty || loginForm.get('open').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+  
+          <ion-item>
+            <ion-label position="floating">closed</ion-label>
+            <ion-datetime displayFormat="HH:mm" formControlName="closed" [(ngModel)]="businessdata.closed" ></ion-datetime>
+          </ion-item>
+          <div class="error" *ngFor="let validate of validation_messages.closed">
+            <div class="messages"
+            *ngIf="loginForm.get('closed').hasError(validate.type) && (loginForm.get('closed').dirty || loginForm.get('closed').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+  
+          <div class="donebtn">
+              <button (click)="createAccount()">
+                  Done
+              </button>
+          </div>
+  
+  
+  
+        </div>
+      </form>
+    </div>
+  </ion-content>

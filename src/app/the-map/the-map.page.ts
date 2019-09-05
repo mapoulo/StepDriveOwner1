@@ -327,6 +327,7 @@ const icon = {
   origin: new google.maps.Point(0,0), // origin
   anchor: new google.maps.Point(0, 0) // anchor
 };
+
   let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
