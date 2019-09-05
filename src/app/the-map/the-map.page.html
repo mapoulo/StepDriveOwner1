@@ -4,6 +4,7 @@
     <!-- <ion-title>TheMap</ion-title>  -->
     <!-- <button ion-button (click)="addMarkersOnTheCustomersCurrentLocation()"><ion-icon name="add"></ion-icon>Add Marker</button> -->
     <button (click)="Logout()" class="Icon">Logout</button> <br>
+    
     <!-- <button (click)="add()">Show Data</button> -->
     <!-- <button (click)="takeData()">Console Data</button> -->
     <!-- <ion-icon ios="ios-contact" md="md-contact" (click)="goToProfile()" class="Icon"></ion-icon> -->
@@ -40,12 +41,12 @@
             <p>Lessons: {{data.lessons}}</p> -->
             
           </div>
-          <p>{{data.location.address}}</p>
+          <p>{{data.doc.location.address}}</p>
           <div class="call">
-            <button expand="full" >Decline</button>
+            <button expand="full" (click)="Decline(data.doc, data.docid)">Decline</button>
           </div>
           <div class="request">
-            <button expand="full" (click)="viewSchool(u)">Accept</button>
+            <button expand="full" (click)="Accept()">Accept</button>
           </div>
         </div>
       </div>
